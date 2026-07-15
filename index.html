@@ -120,6 +120,27 @@
   .sum .b .val b{color:var(--accent)}
   footer{color:var(--faint);font-size:10px;letter-spacing:.34em;text-transform:uppercase;text-align:center;margin-top:34px}
 
+  /* ---- row-by-row hang guide ---- */
+  .gset{font-family:var(--mono);font-size:11px;color:var(--accent);margin:0 0 12px;letter-spacing:.02em}
+  .glegend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .glegend .g{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.3);border:1px solid var(--hairline);
+       border-radius:10px;padding:7px 11px;font-size:12px;color:var(--muted)}
+  .glegend .num,.gstrip span{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .glegend .num{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+       font-family:var(--mono);font-size:11px;font-weight:700;flex:0 0 auto}
+  .glegend .n{font-family:var(--mono);color:var(--ink)}
+  .grow{margin:0 0 18px;overflow-x:auto}
+  .grow .ghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin:0 0 4px}
+  .grow .rn{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink);letter-spacing:.08em}
+  .grow .rl{font-family:var(--mono);font-size:11px;color:var(--accent)}
+  .grow .redge{font-size:9.5px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase}
+  .gruler,.gstrip{display:grid;grid-template-columns:repeat(50,1fr);gap:1px;min-width:840px}
+  .gruler{margin:0 0 2px}
+  .gruler span{font-family:var(--mono);font-size:8.5px;color:var(--faint);text-align:center}
+  .gstrip span{aspect-ratio:1/1;min-width:0;display:flex;align-items:center;justify-content:center;
+       font-family:var(--mono);font-size:9.5px;font-weight:600;border-radius:3px}
+  .grow .runs{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin:5px 0 0;line-height:1.9}
+
   /* ---- svg drawing text ---- */
   .dim{fill:var(--faint);font-family:var(--mono);font-size:10.5px}
   .dimline{stroke:var(--faint);stroke-width:1}
@@ -188,7 +209,7 @@
     <p class="cap">One aircraft cable per row runs level across the width at the deck; each LED drops on its own fishing line. Lengths update with the sliders above.</p>
     <div class="sum" id="sum"></div>
     <table class="cut" id="cut"></table>
-    <p class="note"><b>Ordering allowance:</b> add terminations to the cable (~1–2&nbsp;ft per end) and knot/tie-off to every drop (~10–15%). Row&nbsp;0 = downstage (shortest line); row&nbsp;39 = upstage (longest). Each length is used <b>×50</b> — one per column across the width.</p>
+    <p class="note"><b>Ordering allowance:</b> add terminations to the cable (~1–2&nbsp;ft per end) and knot/tie-off to every drop (~10–15%). Row&nbsp;1 = downstage (shortest line); row&nbsp;40 = upstage (longest). Each length is used <b>×50</b> — one per column across the width.</p>
   </section>
 
   <section class="panel">
@@ -210,6 +231,15 @@
   <section class="panel">
     <h2><span class="idx">05</span>Spec at a glance</h2>
     <table id="spec"><tbody></tbody></table>
+  </section>
+
+  <section class="panel">
+    <h2><span class="idx">06</span>Row-by-row hang guide <span class="ctx">volunteer build sequence · follows the sliders live</span></h2>
+    <p class="cap">One strip per row cable, <b>Row 1 (downstage, over the crowd)</b> through <b>Row 40 (upstage, over the stage)</b>. Positions run <b>1–50</b> left to right, exactly as drawn in the overhead plan above. Each numbered square is one LED — the number is the <b>group bin</b> to pull from. The line under each strip reads the same sequence as counts: <b>6×G2</b> means &ldquo;six lights from bin&nbsp;2 in a row.&rdquo; Line lengths follow the side-section trim sliders and match the cut list. <b>This guide tracks the explorer live</b> — the stamp below records the exact settings it was generated from. Reload the page to return to the defaults, and only hand this to volunteers once the design is locked.</p>
+    <div class="gset" id="gset"></div>
+    <div class="glegend" id="glegend"></div>
+    <p class="note gold"><b>Orientation check before hanging:</b> this guide (like the overhead plan) is the audience&rsquo;s view from the floor, looking up. If you lay cables out on the deck or work from above, left↔right is mirrored — agree on which physical end of each cable is position&nbsp;1 before attaching the first light.</p>
+    <div id="guide"></div>
   </section>
 
   <footer>Zoe Conference 2026 · Light Grid · self-contained build reference</footer>
@@ -481,7 +511,7 @@ function drawSide(){
     svg.appendChild(el('circle',{cx:x,cy:y,r:3.4,fill:jr?'#ffd76b':'#7ff0dc'})); }
   const clx=(xUp+xDown)/2;
   t(clx, deckY+50, 'lbl', 'RAKED CANOPY — 2,000 points');
-  t(clx, deckY+66, 'lbl mut', `JESUS rows (${J_LO}–${J_HI})`);
+  t(clx, deckY+66, 'lbl mut', `JESUS rows (${J_LO+1}–${J_HI+1})`);
 
   t(rowX(0)+7,(deckY+yF(rowH(0)))/2,'dim',`${ftin(SIDE.deck-rowH(0))} line`,'start');
   t(rowX(39)+7,(deckY+yF(rowH(39)))/2,'dim',`${ftin(SIDE.deck-rowH(39))} line`,'start');
@@ -519,7 +549,7 @@ function computeRigging(){
     box('Drop range', `${ftin(lens[0])} → ${ftin(lens[ROWS-1])}`, 'downstage → upstage') +
     box('Rake', `${ang}°`, `${SIDE.up}→${SIDE.down} ft over 58&#8242;6&#8243;`);
   let h='<thead><tr>'+'<th class="r">Row</th><th class="l">Line length</th>'.repeat(4)+'</tr></thead><tbody>';
-  for(let i=0;i<10;i++){ h+='<tr>'; for(let k=0;k<4;k++){ const r=i+k*10; h+=`<td class="r">${r}</td><td class="l">${ftin(lens[r])}</td>`; } h+='</tr>'; }
+  for(let i=0;i<10;i++){ h+='<tr>'; for(let k=0;k<4;k++){ const r=i+k*10; h+=`<td class="r">${r+1}</td><td class="l">${ftin(lens[r])}</td>`; } h+='</tr>'; }
   document.getElementById('cut').innerHTML=h+'</tbody>';
 }
 
@@ -531,7 +561,7 @@ function computeRigging(){
   s('Spacing','18&#8243; (1.5 ft) on center');
   s('Footprint','73&#8242;&#8202;6&#8243; wide × 58&#8242;&#8202;6&#8243; deep');
   s('Control groups','10 — 2 JESUS · 3 stars · 5 arcs');
-  s('Lettering',`JESUS · 8×14 cells · rows ${J_LO}–${J_HI} · corners softened`);
+  s('Lettering',`JESUS · 8×14 cells · rows ${J_LO+1}–${J_HI+1} · corners softened`);
   s('Ceiling deck','37 ft (fixed)');
   s('Rake','18 → 31 ft over 58&#8242;6&#8243;');
   s('Stage','3 ft high (fixed) · 25 ft deep at upstage rows');
@@ -593,6 +623,41 @@ syncMapping(); rebuild(); requestAnimationFrame(draw);
   function loop(ts){ paint(ts/1000); if(!still) requestAnimationFrame(loop); }
   build(); requestAnimationFrame(loop);
   window.addEventListener('resize',()=>{ build(); if(still) paint(0); });
+})();
+
+/* ================= 06 — row-by-row hang guide (live: follows the sliders) ================= */
+const GNUM={B1:1,B2:2,B3:3,B4:4,B5:5,S1:6,S2:7,S3:8,JA:9,JB:10};
+const GNAME={B1:'Arc 1',B2:'Arc 2',B3:'Arc 3',B4:'Arc 4',B5:'Arc 5',S1:'Stars 1',S2:'Stars 2',S3:'Stars 3',JA:'JESUS A',JB:'JESUS B'};
+const GCSS={}; for(const g in GNUM){ const [r,gr,b]=hexRGB(MAPCOL[g]);
+  GCSS[g]=`background:${MAPCOL[g]};color:${(.299*r+.587*gr+.114*b)>150?'#0b0b0d':'#fff'}`; }
+const GRULER='<div class="gruler">'+[1,10,20,30,40,50].map(p=>`<span style="grid-column:${p}">${p}</span>`).join('')+'</div>';
+function buildGuide(){
+  const host=document.getElementById('guide'); if(!host) return;
+  document.getElementById('gset').textContent=
+    `design stamp — curvature ${P.curve} (${curveWord(P.curve)}) · corners ${cornerWords[P.corner]} · ${P.stars} stars · trim ${SIDE.up}→${SIDE.down} ft · camouflage ${fidelity}%`;
+  const tot={}; for(const g of group.values()) tot[g]=(tot[g]||0)+1;
+  document.getElementById('glegend').innerHTML=Object.keys(GNUM).map(g=>
+    `<span class="g"><span class="num" style="${GCSS[g]}">${GNUM[g]}</span>${GNAME[g]}<span class="n">${tot[g]||0}</span></span>`).join('');
+  let html='';
+  for(let r=0;r<ROWS;r++){
+    const len=SIDE.deck-(SIDE.up+((ROWS-1-r)/(ROWS-1))*(SIDE.down-SIDE.up));
+    const edge=r===0?'downstage edge — over the crowd':r===ROWS-1?'upstage edge — over the stage':'';
+    let cells='', runs=[], last=0;
+    for(let c=0;c<COLS;c++){
+      const g=group.get(KEY(c,r)), n=GNUM[g];
+      cells+=`<span style="${GCSS[g]}">${n}</span>`;
+      if(last===n) runs[runs.length-1][1]++; else runs.push([n,1]);
+      last=n;
+    }
+    html+=`<div class="grow"><div class="ghead"><span class="rn">ROW ${r+1}</span><span class="rl">line ${ftin(len)}</span>${edge?`<span class="redge">${edge}</span>`:''}</div>${GRULER}<div class="gstrip">${cells}</div><div class="runs">${runs.map(([n,k])=>k+'×G'+n).join(' · ')}</div></div>`;
+  }
+  host.innerHTML=html;
+}
+(function initGuide(){
+  if(!document.getElementById('guide')) return;
+  let t=null; const queue=()=>{ clearTimeout(t); t=setTimeout(buildGuide,120); };   // coalesce drag events
+  ['curve','corner','stars','down','up'].forEach(id=>document.getElementById(id).addEventListener('input',queue));
+  buildGuide();
 })();
 </script>
 </body>
