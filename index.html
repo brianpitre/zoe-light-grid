@@ -166,7 +166,7 @@
     <div class="bar">
       <div class="ctl">
         <label>Wave curvature <span class="v" id="vCurve"></span></label>
-        <input type="range" id="curve" min="45" max="260" step="1" value="92">
+        <input type="range" id="curve" min="45" max="260" step="1" value="53">
       </div>
       <div class="ctl" style="min-width:150px">
         <label>JESUS corner softening <span class="v" id="vCorner"></span></label>
@@ -174,7 +174,7 @@
       </div>
       <div class="ctl" style="min-width:150px">
         <label>Star count <span class="v" id="vStars"></span></label>
-        <input type="range" id="stars" min="0" max="360" step="6" value="180">
+        <input type="range" id="stars" min="0" max="360" step="6" value="288">
       </div>
       <div class="modes" id="modes">
         <button data-m="demo" class="on">▶ Demo</button>
@@ -188,7 +188,7 @@
     <div class="stage"><canvas id="cv"></canvas></div>
     <div class="counts" id="counts"></div>
     <p class="note acc"><b>Reading the demo:</b> waves roll upstage→downstage across the 5 arcs, the 3 star groups twinkle out of phase, then JESUS reveals — watch it lift out of the arcs and settle back in. Use <b>JESUS hidden / shown</b> to compare directly, and <b>Group map</b> for the raw assignment. Footprint 73′6″ × 58′6″, 18″ on center.</p>
-    <p class="note gold"><b>The JESUS camouflage:</b> the two JESUS groups are split along an arc boundary, so when "hidden" each half wears the color of the arc crossing it and the word disappears. It's cleanest when the word crosses exactly two arcs — the <b>camouflage %</b> below the canvas shows how well the current curvature achieves that (nudge the wave-curvature slider toward 100%). The 3 star groups let the stars shimmer independently instead of blooming as one.</p>
+    <p class="note gold"><b>The JESUS camouflage:</b> the two JESUS groups are split along an arc boundary, so when "hidden" each half wears the color of the arc crossing it and the word disappears. It's cleanest when the word crosses exactly two arcs — the <b>camouflage %</b> below the canvas shows how well the current curvature achieves that. (The default curvature of 53 is chosen so every group fits its controller zone's LED stock — check the zone legend in the hang guide before changing it.) The 3 star groups let the stars shimmer independently instead of blooming as one.</p>
   </section>
 
   <section class="panel">
@@ -218,9 +218,9 @@
     <table>
       <thead><tr><th>Item</th><th class="n">Qty</th><th class="n">Cost</th></tr></thead>
       <tbody>
-        <tr><td>Black fishing line</td><td class="n">9,000 ft</td><td class="n">$90</td></tr>
-        <tr><td>Black aircraft cable</td><td class="n">1,100 ft</td><td class="n">$555</td></tr>
-        <tr><td>LED batteries</td><td class="n">2,100</td><td class="n">$385</td></tr>
+        <tr><td>Black fishing line</td><td class="n">27,000 ft</td><td class="n">$90</td></tr>
+        <tr><td>Black aircraft cable</td><td class="n">3,300 ft</td><td class="n">$555</td></tr>
+        <tr><td>LED batteries <span style="color:var(--faint)">(2,000 + 100 contingency)</span></td><td class="n">2,100</td><td class="n">$385</td></tr>
         <tr><td>Black 4&#8243; tape</td><td class="n">2,800 ft</td><td class="n">$270</td></tr>
         <tr><td>Miscellaneous</td><td class="n">—</td><td class="n">$500</td></tr>
         <tr style="border-top:2px solid var(--line)"><td><b>Total</b></td><td></td><td class="n"><b>$1,800</b></td></tr>
@@ -235,9 +235,10 @@
 
   <section class="panel">
     <h2><span class="idx">06</span>Row-by-row hang guide <span class="ctx">volunteer build sequence · follows the sliders live</span></h2>
-    <p class="cap">One strip per row cable, <b>Row 1 (downstage, over the crowd)</b> through <b>Row 40 (upstage, over the stage)</b>. Positions run <b>1–50</b> left to right, exactly as drawn in the overhead plan above. Each numbered square is one LED — the number is the <b>group bin</b> to pull from. The line under each strip reads the same sequence as counts: <b>6×G2</b> means &ldquo;six lights from bin&nbsp;2 in a row.&rdquo; Line lengths follow the side-section trim sliders and match the cut list. <b>This guide tracks the explorer live</b> — the stamp below records the exact settings it was generated from. Reload the page to return to the defaults, and only hand this to volunteers once the design is locked.</p>
+    <p class="cap">One strip per row cable, <b>Row 1 (downstage, over the crowd)</b> through <b>Row 40 (upstage, over the stage)</b>. Positions run <b>1–50</b> left to right, exactly as drawn in the overhead plan above. Each numbered square is one LED — the number is the <b>controller zone</b> (= the stock bin) to pull from. The line under each strip reads the same sequence as counts: <b>6×Z2</b> means &ldquo;six lights from Zone&nbsp;2 in a row.&rdquo; Line lengths follow the side-section trim sliders and match the cut list. <b>This guide tracks the explorer live</b> — the stamp below records the exact settings it was generated from. Reload the page to return to the defaults, and only hand this to volunteers once the design is locked.</p>
     <div class="gset" id="gset"></div>
     <div class="glegend" id="glegend"></div>
+    <p class="note"><b>Zone stock limits:</b> Zones 1–2 hold 100 · Zones 3–4 hold 400 · Zones 5–6 hold 300 · Zones 7–8 hold 210 · Zones 9–10 hold 150. The legend reads <b>count/stock</b> — <span style="color:var(--accent)">teal</span> = fits with 10%+ spares, <span style="color:var(--gold)">gold</span> = fits with under 10% spares, <span style="color:var(--warn)">red</span> = over stock.</p>
     <p class="note gold"><b>Orientation check before hanging:</b> this guide (like the overhead plan) is the audience&rsquo;s view from the floor, looking up. If you lay cables out on the deck or work from above, left↔right is mirrored — agree on which physical end of each cable is position&nbsp;1 before attaching the first light.</p>
     <div id="guide"></div>
   </section>
@@ -254,7 +255,7 @@ const LETTERS={
   S:[[0,0,8,2],[0,2,2,4],[0,6,8,2],[6,8,2,4],[0,12,8,2]],
   U:[[0,0,2,12],[6,0,2,12],[0,12,8,2]],
 };
-const WORD="JESUS", WORD_X0=1, WORD_Y0=10, LETTER_PITCH=10;   // rows 10–23 (moved 9 rows downstage from 19)
+const WORD="JESUS", WORD_X0=1, WORD_Y0=11, LETTER_PITCH=10;   // rows 11–24 (displayed 12–25) — 1 row upstage buys zone-stock headroom
 const NBANDS=5;
 const KEY=(c,r)=>c+","+r;
 
@@ -283,7 +284,7 @@ const shuffled=allCells.slice();
 (function(){const rng=mulberry32(20260709);for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}})();
 function emptyNeighbors(set,c,r){let n=0;for(let dc=-1;dc<=1;dc++)for(let dr=-1;dr<=1;dr++){if(!dc&&!dr)continue;if(!set.has(KEY(c+dc,r+dr)))n++;}return n;}
 
-let P={curve:92, corner:1, stars:180};
+let P={curve:53, corner:1, stars:288};   // defaults chosen so every group fits its controller zone's LED stock
 let mode='demo';
 let group=new Map();
 let counts={};
@@ -491,7 +492,7 @@ function drawSide(){
   for(let i=1;i<=7;i++){const fx=GAP_FT+i*(riseRun/8), fy=(i/8)*15;
     svg.appendChild(el('line',{x1:xFt(depthFt+fx),y1:yF(fy),x2:xFt(depthFt+fx)+7,y2:yF(fy)+9,stroke:'#4f4a3e','stroke-width':1.5}));}
   t(xFt(depthFt+GAP_FT+riseRun/2), yF(0)+22, 'lbl mut', 'AUDIENCE — upper level');
-  // 15 ft gap between the downstage row and the start of the upper level
+  // GAP_FT gap between the downstage row and the start of the upper level
   svg.appendChild(el('line',{x1:xDown,y1:floor+34,x2:gapEnd,y2:floor+34,class:'dimline'}));
   svg.appendChild(el('line',{x1:gapEnd,y1:floor+30,x2:gapEnd,y2:floor+38,class:'dimline'}));
   t((xDown+gapEnd)/2, floor+50, 'dim', `${GAP_FT} ft`);
@@ -582,7 +583,11 @@ function computeRigging(){
   };
   ['down','up'].forEach(id=>{
     const inp=document.getElementById(id);
-    inp.addEventListener('input',()=>{ SIDE[id]=parseFloat(inp.value); syncSide(); drawSide(); computeRigging(); });
+    inp.addEventListener('input',()=>{
+      let v=parseFloat(inp.value);                       // keep the rake: downstage must stay above upstage
+      if(id==='down') v=Math.max(v, SIDE.up+0.5); else v=Math.min(v, SIDE.down-0.5);
+      inp.value=v; SIDE[id]=v; syncSide(); drawSide(); computeRigging();
+    });
   });
   syncSide(); drawSide(); computeRigging();
 })();
@@ -626,18 +631,30 @@ syncMapping(); rebuild(); requestAnimationFrame(draw);
 })();
 
 /* ================= 06 — row-by-row hang guide (live: follows the sliders) ================= */
-const GNUM={B1:1,B2:2,B3:3,B4:4,B5:5,S1:6,S2:7,S3:8,JA:9,JB:10};
+// fixed group → controller-zone map (zone stock: Z1/Z2=100, Z3/Z4=400, Z5/Z6=300, Z7/Z8=210, Z9/Z10=150),
+// chosen so the default design fits every zone's stock
+const ZONES={B2:{z:3,cap:400},B4:{z:4,cap:400},B3:{z:5,cap:300},B5:{z:6,cap:300},B1:{z:7,cap:210},JA:{z:8,cap:210},S1:{z:9,cap:150},S2:{z:10,cap:150},S3:{z:1,cap:100},JB:{z:2,cap:100}};
+const GNUM={}; for(const g in ZONES) GNUM[g]=ZONES[g].z;
 const GNAME={B1:'Arc 1',B2:'Arc 2',B3:'Arc 3',B4:'Arc 4',B5:'Arc 5',S1:'Stars 1',S2:'Stars 2',S3:'Stars 3',JA:'JESUS A',JB:'JESUS B'};
 const GCSS={}; for(const g in GNUM){ const [r,gr,b]=hexRGB(MAPCOL[g]);
   GCSS[g]=`background:${MAPCOL[g]};color:${(.299*r+.587*gr+.114*b)>150?'#0b0b0d':'#fff'}`; }
 const GRULER='<div class="gruler">'+[1,10,20,30,40,50].map(p=>`<span style="grid-column:${p}">${p}</span>`).join('')+'</div>';
 function buildGuide(){
   const host=document.getElementById('guide'); if(!host) return;
-  document.getElementById('gset').textContent=
-    `design stamp — curvature ${P.curve} (${curveWord(P.curve)}) · corners ${cornerWords[P.corner]} · ${P.stars} stars · trim ${SIDE.up}→${SIDE.down} ft · camouflage ${fidelity}%`;
   const tot={}; for(const g of group.values()) tot[g]=(tot[g]||0)+1;
-  document.getElementById('glegend').innerHTML=Object.keys(GNUM).map(g=>
-    `<span class="g"><span class="num" style="${GCSS[g]}">${GNUM[g]}</span>${GNAME[g]}<span class="n">${tot[g]||0}</span></span>`).join('');
+  let worst=null; const over=[];
+  for(const g in ZONES){ const n=tot[g]||0, cap=ZONES[g].cap, h=cap/Math.max(n,1)-1;
+    if(n>cap) over.push(`${GNAME[g]} ${n}/${cap}`);
+    if(!worst||h<worst.h) worst={g,n,cap,h}; }
+  const stock=over.length?` · OVER ZONE STOCK — ${over.join(', ')}`
+    :` · zone stock OK (tightest: ${GNAME[worst.g]} ${worst.n}/${worst.cap}, ${Math.round(worst.h*100)}% spare)`;
+  const gset=document.getElementById('gset');
+  gset.textContent=`design stamp — curvature ${P.curve} (${curveWord(P.curve)}) · corners ${cornerWords[P.corner]} · ${P.stars} stars · trim ${SIDE.up}→${SIDE.down} ft · camouflage ${fidelity}%`+stock;
+  gset.style.color=over.length?'var(--warn)':'var(--accent)';
+  document.getElementById('glegend').innerHTML=Object.keys(ZONES).sort((a,b)=>ZONES[a].z-ZONES[b].z).map(g=>{
+    const n=tot[g]||0, cap=ZONES[g].cap;
+    const col=n>cap?'var(--warn)':n*1.1>cap?'var(--gold)':'var(--accent)';
+    return `<span class="g"><span class="num" style="${GCSS[g]}">${ZONES[g].z}</span>Zone ${ZONES[g].z} · ${GNAME[g]}<span class="n" style="color:${col}">${n}/${cap}</span></span>`;}).join('');
   let html='';
   for(let r=0;r<ROWS;r++){
     const len=SIDE.deck-(SIDE.up+((ROWS-1-r)/(ROWS-1))*(SIDE.down-SIDE.up));
@@ -649,7 +666,7 @@ function buildGuide(){
       if(last===n) runs[runs.length-1][1]++; else runs.push([n,1]);
       last=n;
     }
-    html+=`<div class="grow"><div class="ghead"><span class="rn">ROW ${r+1}</span><span class="rl">line ${ftin(len)}</span>${edge?`<span class="redge">${edge}</span>`:''}</div>${GRULER}<div class="gstrip">${cells}</div><div class="runs">${runs.map(([n,k])=>k+'×G'+n).join(' · ')}</div></div>`;
+    html+=`<div class="grow"><div class="ghead"><span class="rn">ROW ${r+1}</span><span class="rl">line ${ftin(len)}</span>${edge?`<span class="redge">${edge}</span>`:''}</div>${GRULER}<div class="gstrip">${cells}</div><div class="runs">${runs.map(([n,k])=>k+'×Z'+n).join(' · ')}</div></div>`;
   }
   host.innerHTML=html;
 }
