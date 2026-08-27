@@ -174,7 +174,7 @@
       </div>
       <div class="ctl" style="min-width:150px">
         <label>Star count <span class="v" id="vStars"></span></label>
-        <input type="range" id="stars" min="252" max="300" step="6" value="288">
+        <input type="range" id="stars" min="252" max="300" step="6" value="276">
       </div>
       <div class="ctl" style="min-width:150px">
         <label>Wave speed <span class="v" id="vSpeed"></span></label>
@@ -288,7 +288,7 @@ const shuffled=allCells.slice();
 (function(){const rng=mulberry32(20260709);for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}})();
 function emptyNeighbors(set,c,r){let n=0;for(let dc=-1;dc<=1;dc++)for(let dr=-1;dr<=1;dr++){if(!dc&&!dr)continue;if(!set.has(KEY(c+dc,r+dr)))n++;}return n;}
 
-let P={curve:53, corner:1, stars:288, speed:1};   // defaults chosen so every group fits its controller zone's LED stock (speed is view-only — no effect on the build)
+let P={curve:53, corner:1, stars:276, speed:1};   // defaults maximize the SMALLEST physical LED spare across the 10 zones (276 stars → ≥7 spare everywhere; 288 gave a better % but only 4 spare in Z1). speed is view-only — no effect on the build
 let mode='demo';
 let wavePhase=0, prevT=null;   // accumulated wave angle — advanced per-frame so the speed slider changes rate with no phase jump
 let group=new Map();
