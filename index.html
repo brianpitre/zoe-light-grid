@@ -178,7 +178,7 @@
       </div>
       <div class="ctl" style="min-width:150px">
         <label>Wave speed <span class="v" id="vSpeed"></span></label>
-        <input type="range" id="speed" min="0.2" max="3" step="0.1" value="1">
+        <input type="range" id="speed" min="0.2" max="5" step="0.1" value="1">
       </div>
       <div class="modes" id="modes">
         <button data-m="demo" class="on">▶ Demo</button>
@@ -379,8 +379,9 @@ const R=step*0.09;
 
 function smooth(e0,e1,x){x=Math.min(1,Math.max(0,(x-e0)/(e1-e0)));return x*x*(3-2*x);}
 function pulse(t,a,b,f){return smooth(a-f,a,t)*(1-smooth(b,b+f,t));}
+const WSPREAD=0.95;   // phase offset per arc (was 1.15 with a hard-clipped wave) — smaller = crests overlap more across the 5 arcs
 function levels(time,wph){
-  const wp=b=>Math.max(0,Math.sin(wph - b*1.15));                 // wave roll — driven by the speed-scaled accumulated angle
+  const wp=b=>0.5+0.5*Math.sin(wph - b*WSPREAD);                  // smooth raised sine (no hard clip) → arcs crossfade instead of snapping on then sitting dark
   const tw=j=>0.12+0.88*(0.5+0.5*Math.sin(time*1.7 + j*2.094));   // per-star-group twinkle (real time — independent of wave speed)
   let wEnv=1, sEnv=0.05, reveal=0;
   if(mode==='waves'){ wEnv=1; sEnv=0.05; reveal=0; }
@@ -388,7 +389,7 @@ function levels(time,wph){
   else if(mode==='hide'){ wEnv=0.92; sEnv=0.06; reveal=0; }
   else if(mode==='show'){ wEnv=0.92; sEnv=0.06; reveal=1; }
   else { const T=24, tt=time%T; sEnv=pulse(tt,7,12,1.6); reveal=pulse(tt,15,20,1.6); wEnv=Math.max(0.55,1-0.25*reveal); }
-  const bl=[0]; for(let b=1;b<=NBANDS;b++) bl[b]=wEnv*(0.12+0.88*Math.pow(wp(b),1.3));
+  const bl=[0]; for(let b=1;b<=NBANDS;b++) bl[b]=wEnv*(0.12+0.88*Math.pow(wp(b),1.6));   // gentler peak → wider, overlapping crests
   const sl=[0]; for(let j=1;j<=3;j++) sl[j]=sEnv*tw(j);
   return {bl,sl,reveal};
 }
@@ -458,7 +459,7 @@ function paintCounts(){
   const cj=document.getElementById('chipJesus'); if(cj) cj.innerHTML='JESUS = <b>'+(counts.JA+counts.JB)+'</b>';
 }
 function curveWord(v){ return v<70?'tight (rainbow-ish)':v<120?'gentle waves':v<190?'long rollers':'nearly flat'; }
-function speedWord(v){ return v<0.6?'slow drift':v<1.25?'natural':v<2.1?'brisk':'fast'; }
+function speedWord(v){ return v<0.6?'slow drift':v<1.25?'natural':v<2.1?'brisk':v<3.6?'fast':'blazing'; }
 const cornerWords=['off (full word)','soft','softer'];
 const $=id=>document.getElementById(id);
 function syncMapping(){ $('vCurve').textContent=curveWord(P.curve); $('vCorner').textContent=cornerWords[P.corner]; $('vStars').textContent=P.stars; $('vSpeed').textContent=P.speed.toFixed(1)+'× · '+speedWord(P.speed); }
