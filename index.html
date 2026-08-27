@@ -176,6 +176,10 @@
         <label>Star count <span class="v" id="vStars"></span></label>
         <input type="range" id="stars" min="0" max="360" step="6" value="288">
       </div>
+      <div class="ctl" style="min-width:150px">
+        <label>Wave speed <span class="v" id="vSpeed"></span></label>
+        <input type="range" id="speed" min="0.2" max="3" step="0.1" value="1">
+      </div>
       <div class="modes" id="modes">
         <button data-m="demo" class="on">▶ Demo</button>
         <button data-m="waves">Waves</button>
@@ -284,8 +288,9 @@ const shuffled=allCells.slice();
 (function(){const rng=mulberry32(20260709);for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}})();
 function emptyNeighbors(set,c,r){let n=0;for(let dc=-1;dc<=1;dc++)for(let dr=-1;dr<=1;dr++){if(!dc&&!dr)continue;if(!set.has(KEY(c+dc,r+dr)))n++;}return n;}
 
-let P={curve:53, corner:1, stars:288};   // defaults chosen so every group fits its controller zone's LED stock
+let P={curve:53, corner:1, stars:288, speed:1};   // defaults chosen so every group fits its controller zone's LED stock (speed is view-only — no effect on the build)
 let mode='demo';
+let wavePhase=0, prevT=null;   // accumulated wave angle — advanced per-frame so the speed slider changes rate with no phase jump
 let group=new Map();
 let counts={};
 let jesusRemoved=0, jaBand=1, jbBand=2, fidelity=100, bandsCrossed=0;
@@ -374,9 +379,9 @@ const R=step*0.09;
 
 function smooth(e0,e1,x){x=Math.min(1,Math.max(0,(x-e0)/(e1-e0)));return x*x*(3-2*x);}
 function pulse(t,a,b,f){return smooth(a-f,a,t)*(1-smooth(b,b+f,t));}
-function levels(time){
-  const wp=b=>Math.max(0,Math.sin(time*0.9 - b*1.15));
-  const tw=j=>0.12+0.88*(0.5+0.5*Math.sin(time*1.7 + j*2.094));   // per-star-group twinkle
+function levels(time,wph){
+  const wp=b=>Math.max(0,Math.sin(wph - b*1.15));                 // wave roll — driven by the speed-scaled accumulated angle
+  const tw=j=>0.12+0.88*(0.5+0.5*Math.sin(time*1.7 + j*2.094));   // per-star-group twinkle (real time — independent of wave speed)
   let wEnv=1, sEnv=0.05, reveal=0;
   if(mode==='waves'){ wEnv=1; sEnv=0.05; reveal=0; }
   else if(mode==='starsm'){ wEnv=0.14; sEnv=1; reveal=0; }
@@ -389,9 +394,12 @@ function levels(time){
 }
 function draw(ts){
   const time=ts/1000;
+  if(prevT===null) prevT=time;
+  const dt=Math.min(0.05,Math.max(0,time-prevT)); prevT=time;   // clamp dt so a backgrounded tab doesn't lurch the waves on return
+  wavePhase+=dt*0.9*P.speed;                                    // 0.9 rad/s at speed 1 = the original wave rate
   ctx.clearRect(0,0,CW,CH); ctx.fillStyle='#02040a'; ctx.fillRect(0,0,CW,CH);
   if(mode==='map'){ drawMap(); requestAnimationFrame(draw); return; }
-  const {bl,sl,reveal}=levels(time); const gold=[255,215,110];
+  const {bl,sl,reveal}=levels(time,wavePhase); const gold=[255,215,110];
   for(const [c,r] of allCells){
     const g=group.get(KEY(c,r)), x=X(c), y=Y(r);
     ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle='#0c1728'; ctx.fill();
@@ -450,12 +458,14 @@ function paintCounts(){
   const cj=document.getElementById('chipJesus'); if(cj) cj.innerHTML='JESUS = <b>'+(counts.JA+counts.JB)+'</b>';
 }
 function curveWord(v){ return v<70?'tight (rainbow-ish)':v<120?'gentle waves':v<190?'long rollers':'nearly flat'; }
+function speedWord(v){ return v<0.6?'slow drift':v<1.25?'natural':v<2.1?'brisk':'fast'; }
 const cornerWords=['off (full word)','soft','softer'];
 const $=id=>document.getElementById(id);
-function syncMapping(){ $('vCurve').textContent=curveWord(P.curve); $('vCorner').textContent=cornerWords[P.corner]; $('vStars').textContent=P.stars; }
+function syncMapping(){ $('vCurve').textContent=curveWord(P.curve); $('vCorner').textContent=cornerWords[P.corner]; $('vStars').textContent=P.stars; $('vSpeed').textContent=P.speed.toFixed(1)+'× · '+speedWord(P.speed); }
 $('curve').oninput=e=>{P.curve=+e.target.value;syncMapping();rebuild();};
 $('corner').oninput=e=>{P.corner=+e.target.value;syncMapping();rebuild();};
 $('stars').oninput=e=>{P.stars=+e.target.value;syncMapping();rebuild();};
+$('speed').oninput=e=>{P.speed=+e.target.value;syncMapping();};   // no rebuild — speed only changes the animation rate, not the mapping
 document.getElementById('modes').onclick=e=>{const b=e.target.closest('button');if(!b)return;
   mode=b.dataset.m; [...document.querySelectorAll('#modes button')].forEach(x=>x.classList.toggle('on',x===b));};
 window.addEventListener('resize',()=>{dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));sizeCanvas();});
