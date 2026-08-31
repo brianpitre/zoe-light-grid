@@ -191,7 +191,7 @@
     </div>
     <div class="stage"><canvas id="cv"></canvas></div>
     <div class="counts" id="counts"></div>
-    <p class="note acc"><b>Reading the demo:</b> waves roll upstage→downstage across the 5 arcs, the 3 star groups twinkle out of phase, then JESUS reveals — watch it lift out of the arcs and settle back in. Use <b>JESUS hidden / shown</b> to compare directly, and <b>Group map</b> for the raw assignment. Footprint 73′6″ × 58′6″, 18″ on center.</p>
+    <p class="note acc"><b>Reading the demo:</b> waves roll upstage→downstage across the 5 arcs, the 3 star groups twinkle out of phase, then JESUS reveals — watch it lift out of the arcs and settle back in. Use <b>JESUS hidden / shown</b> to compare directly, and <b>Group map</b> for the raw assignment. Footprint 65′4″ × 52′0″, 16″ on center.</p>
     <p class="note gold"><b>The JESUS camouflage:</b> the two JESUS groups are split along an arc boundary, so when "hidden" each half wears the color of the arc crossing it and the word disappears. It's cleanest when the word crosses exactly two arcs — the <b>camouflage %</b> below the canvas shows how well the current curvature achieves that. <b>Wave curvature is locked at 53</b> — it is the only setting with real headroom against the controller zones' LED stock: across the old 45–260 range only 51–55 fit at all, and everything else put a zone over its physical count. <b>Star count is limited to 252–300</b> for the same reason — fewer stars overflow the arc zones, more overflow the star zones, and the floor allows for the extra cells that the "softer" corner setting hands back to the arcs. The 3 star groups let the stars shimmer independently instead of blooming as one.</p>
   </section>
 
@@ -205,7 +205,7 @@
       <div class="fixed"><span class="k">Stage height</span><span class="fv">3 ft <small>fixed</small></span></div>
     </div>
     <div class="svgwrap"><svg id="side" xmlns="http://www.w3.org/2000/svg"></svg></div>
-    <p class="note"><b>Real dimensions.</b> Deck 37&nbsp;ft (fixed); canopy raked 18&nbsp;ft upstage → 31&nbsp;ft downstage; stage 3&nbsp;ft high (fixed, 25&nbsp;ft deep at the upstage rows). Each row's fishing-line length = deck − that row's height. Drag the two LED-height sliders to explore alternative trims — the drawing and the cut list below update live. (Depth 58&#8242;&#8202;6&#8243; and 18&#8243; spacing are locked.)</p>
+    <p class="note"><b>Real dimensions.</b> Deck 37&nbsp;ft (fixed); canopy raked 18&nbsp;ft upstage → 31&nbsp;ft downstage; stage 3&nbsp;ft high (fixed, 25&nbsp;ft deep at the upstage rows). Each row's fishing-line length = deck − that row's height. Drag the two LED-height sliders to explore alternative trims — the drawing and the cut list below update live. (Depth 52&#8242;&#8202;0&#8243; and 16&#8243; spacing are locked.)</p>
   </section>
 
   <section class="panel">
@@ -252,7 +252,7 @@
 
 <script>
 /* ================= shared design constants ================= */
-const COLS=50, ROWS=40, SPACING_FT=1.5;
+const COLS=50, ROWS=40, SPACING_FT=16/12;   // 16" on center
 const LETTERS={
   J:[[6,0,2,14],[0,12,6,2],[0,10,2,2]],
   E:[[0,0,2,14],[0,0,8,2],[0,6,6,2],[0,12,8,2]],
@@ -445,9 +445,9 @@ function clabels(){
   ctx.fillText('DOWNSTAGE — over the crowd', CW/2, oy-18);
   ctx.fillText('UPSTAGE — over the stage', CW/2, oy+gh+24);
   ctx.fillStyle='rgba(154,147,130,.75)'; ctx.font="11px ui-monospace,Menlo,monospace";
-  ctx.fillText('73′6″ wide · 50 @ 18″ o.c.', CW/2, oy+gh+42);
+  ctx.fillText('65′4″ wide · 50 @ 16″ o.c.', CW/2, oy+gh+42);
   ctx.save(); ctx.translate(ox-24, oy+gh/2); ctx.rotate(-Math.PI/2);
-  ctx.fillText('58′6″ deep · 40 @ 18″ o.c.', 0, 0); ctx.restore();
+  ctx.fillText('52′0″ deep · 40 @ 16″ o.c.', 0, 0); ctx.restore();
 }
 function paintCounts(){
   const box=document.getElementById('counts');
@@ -537,7 +537,7 @@ function drawSide(){
   const yd=floor+34;
   svg.appendChild(el('line',{x1:xUp,y1:yd,x2:xDown,y2:yd,class:'dimline'}));
   [xUp,xDown].forEach(x=>svg.appendChild(el('line',{x1:x,y1:yd-4,x2:x,y2:yd+4,class:'dimline'})));
-  t((xUp+xDown)/2,yd+16,'dim','58&#8242;&#8202;6&#8243; canopy depth · 40 rows @ 18&#8243; o.c.');
+  t((xUp+xDown)/2,yd+16,'dim','52&#8242;&#8202;0&#8243; canopy depth · 40 rows @ 16&#8243; o.c.');
   t(xUp,yd-8,'dim','upstage','start'); t(xDown,yd-8,'dim','downstage','end');
 
   const ang=(Math.atan2((SIDE.down-SIDE.up),depthFt)*180/Math.PI).toFixed(1);
@@ -553,14 +553,14 @@ function computeRigging(){
   const depthFt=(ROWS-1)*SPACING_FT;
   const lens=[]; for(let r=0;r<ROWS;r++){ const h=SIDE.up+((ROWS-1-r)/(ROWS-1))*(SIDE.down-SIDE.up); lens.push(SIDE.deck-h); }
   const sumCol=lens.reduce((a,b)=>a+b,0);
-  const totalFish=Math.round(sumCol*COLS), cable=ROWS*WIDTH_FT;
+  const totalFish=Math.round(sumCol*COLS), cable=Math.round(ROWS*WIDTH_FT);   // round: 16" o.c. makes the width non-integer
   const ang=(Math.atan2((SIDE.down-SIDE.up),depthFt)*180/Math.PI).toFixed(1);
   const box=(k,v,s)=>`<div class="b"><span class="k">${k}</span><span class="val">${v}</span><span class="k" style="display:block;margin-top:3px">${s}</span></div>`;
   document.getElementById('sum').innerHTML =
-    box('Aircraft cable', `<b>${cable.toLocaleString()}</b> ft`, '40 rows × 73&#8242;6&#8243;') +
+    box('Aircraft cable', `<b>${cable.toLocaleString()}</b> ft`, '40 rows × 65&#8242;4&#8243;') +
     box('Fishing line', `<b>${totalFish.toLocaleString()}</b> ft`, `2,000 drops · avg ${ftin(sumCol/ROWS)}`) +
     box('Drop range', `${ftin(lens[0])} → ${ftin(lens[ROWS-1])}`, 'downstage → upstage') +
-    box('Rake', `${ang}°`, `${SIDE.up}→${SIDE.down} ft over 58&#8242;6&#8243;`);
+    box('Rake', `${ang}°`, `${SIDE.up}→${SIDE.down} ft over 52&#8242;0&#8243;`);
   let h='<thead><tr>'+'<th class="r">Row</th><th class="l">Line length</th>'.repeat(4)+'</tr></thead><tbody>';
   for(let i=0;i<10;i++){ h+='<tr>'; for(let k=0;k<4;k++){ const r=i+k*10; h+=`<td class="r">${r+1}</td><td class="l">${ftin(lens[r])}</td>`; } h+='</tr>'; }
   document.getElementById('cut').innerHTML=h+'</tbody>';
@@ -571,16 +571,16 @@ function computeRigging(){
   const sp=document.querySelector('#spec tbody');
   const s=(k,v)=>{const tr=document.createElement('tr');tr.innerHTML=`<td style="color:var(--muted)">${k}</td><td class="n" style="text-align:left">${v}</td>`;sp.appendChild(tr);};
   s('Grid','50 cols × 40 rows = 2,000');
-  s('Spacing','18&#8243; (1.5 ft) on center');
-  s('Footprint','73&#8242;&#8202;6&#8243; wide × 58&#8242;&#8202;6&#8243; deep');
+  s('Spacing','16&#8243; (1.333 ft) on center');
+  s('Footprint','65&#8242;&#8202;4&#8243; wide × 52&#8242;&#8202;0&#8243; deep');
   s('Control groups','10 — 2 JESUS · 3 stars · 5 arcs');
   s('Lettering',`JESUS · 8×14 cells · rows ${J_LO+1}–${J_HI+1} · corners softened`);
   s('Ceiling deck','37 ft (fixed)');
-  s('Rake','18 → 31 ft over 58&#8242;6&#8243;');
+  s('Rake','18 → 31 ft over 52&#8242;0&#8243;');
   s('Stage','3 ft high (fixed) · 25 ft deep at upstage rows');
 
   const chips=document.getElementById('chips');
-  ['2,000 fixtures','18&#8243; on center','73&#8242;6&#8243; × 58&#8242;6&#8243;','10 groups']
+  ['2,000 fixtures','16&#8243; on center','65&#8242;4&#8243; × 52&#8242;0&#8243;','10 groups']
     .forEach(c=>{const d=document.createElement('span');d.className='chip';d.innerHTML=c;chips.appendChild(d);});
   ['chipJesus','chipDeck','chipRake'].forEach(id=>{const d=document.createElement('span');d.className='chip';d.id=id;chips.appendChild(d);});
 })();
