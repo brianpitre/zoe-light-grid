@@ -54,24 +54,10 @@
   .svgwrap{width:100%;overflow-x:auto}
   svg{width:100%;height:auto;display:block}
 
-  /* ---- control consoles ---- */
-  .bar,.dimbar{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;
+  /* ---- readout consoles (no controls — the design is locked) ---- */
+  .bar,.dimbar{display:flex;flex-wrap:wrap;gap:18px 26px;align-items:flex-end;
        background:rgba(0,0,0,.34);border:1px solid var(--hairline);border-radius:14px;
        padding:15px 18px;margin:0 0 16px}
-  .ctl{display:flex;flex-direction:column;gap:7px;min-width:160px}
-  .dimbar .ctl{flex:1;min-width:170px}
-  .ctl label{font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.15em}
-  .ctl .v{color:var(--accent);font-family:var(--mono);font-size:12px;letter-spacing:0;text-transform:none}
-  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:20px;
-       background:transparent;cursor:pointer;margin:0}
-  input[type=range]::-webkit-slider-runnable-track{height:2px;border-radius:2px;background:rgba(255,255,255,.16)}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;margin-top:-5.5px;
-       border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff9e3,var(--gold) 55%,#8a6414);
-       box-shadow:0 0 10px rgba(255,215,107,.8),0 0 26px rgba(255,215,107,.3)}
-  input[type=range]::-moz-range-track{height:2px;border-radius:2px;background:rgba(255,255,255,.16)}
-  input[type=range]::-moz-range-thumb{width:13px;height:13px;border:none;border-radius:50%;
-       background:radial-gradient(circle at 35% 30%,#fff9e3,var(--gold) 55%,#8a6414);
-       box-shadow:0 0 10px rgba(255,215,107,.8),0 0 26px rgba(255,215,107,.3)}
   .modes{display:flex;gap:7px;flex-wrap:wrap;margin-left:auto}
   .modes button{background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--muted);
       border-radius:999px;padding:8px 14px;font-size:12.5px;cursor:pointer;font-family:var(--sans);transition:.16s}
@@ -95,6 +81,8 @@
   .fixed .k{font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.15em}
   .fixed .fv{font-family:var(--mono);font-size:15px;color:var(--ink)}
   .fixed .fv small{color:var(--faint);font-size:9.5px;text-transform:uppercase;letter-spacing:.1em}
+  .lock{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.06em;margin:0 0 14px}
+  .lock.bad{color:var(--warn)}
 
   /* ---- tables ---- */
   table{border-collapse:collapse;width:100%;font-size:13px;margin-top:4px}
@@ -104,6 +92,7 @@
   table.cut{font-size:12px}
   table.cut td,table.cut th{padding:5px 9px}
   table.cut td.r{color:var(--faint);font-family:var(--mono);text-align:right;width:1%}
+  table.cut td.c{color:var(--muted);font-family:var(--mono);text-align:right;width:1%}
   table.cut td.l{font-family:var(--mono);text-align:left;color:var(--ink)}
   table.cut th{font-size:10px}
 
@@ -133,12 +122,14 @@
   .grow .ghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin:0 0 4px}
   .grow .rn{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink);letter-spacing:.08em}
   .grow .rl{font-family:var(--mono);font-size:11px;color:var(--accent)}
+  .grow .rc{font-family:var(--mono);font-size:11px;color:var(--muted)}
   .grow .redge{font-size:9.5px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase}
-  .gruler,.gstrip{display:grid;grid-template-columns:repeat(50,1fr);gap:1px;min-width:840px}
+  .gruler,.gstrip{display:grid;grid-template-columns:repeat(52,1fr);gap:1px;min-width:880px}
   .gruler{margin:0 0 2px}
   .gruler span{font-family:var(--mono);font-size:8.5px;color:var(--faint);text-align:center}
   .gstrip span{aspect-ratio:1/1;min-width:0;display:flex;align-items:center;justify-content:center;
        font-family:var(--mono);font-size:9.5px;font-weight:600;border-radius:3px}
+  .gstrip span.off{background:transparent;border:1px dashed rgba(255,255,255,.09)}
   .grow .runs{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin:5px 0 0;line-height:1.9}
 
   /* ---- svg drawing text ---- */
@@ -154,7 +145,7 @@
   <div class="hero-inner">
     <p class="overline">Zoe Conference 2026</p>
     <h1>Light Grid — Build Views</h1>
-    <p class="sub">Overhead mapping (interactive), side section, and rigging cut list in one place. 2,000 hung LED points · 10 control groups.</p>
+    <p class="sub">Overhead mapping, side section, rigging cut list and the row-by-row hang guide in one place. 1,868 hung LED points on the installed wire rope · 10 control groups · <b style="color:var(--gold);font-weight:600">design locked</b>.</p>
     <div class="chips" id="chips"></div>
   </div>
 </header>
@@ -162,24 +153,14 @@
 
   <section class="panel">
     <h2><span class="idx">01</span>Overhead plan &amp; mapping <span class="ctx">viewed from the floor</span></h2>
-    <p class="cap">10 groups: <b>2 for JESUS · 3 star groups · 5 arcs</b>. JESUS splits into two groups along an arc boundary — hide it by matching each half to its arc, reveal it by lighting both a shared color. This is the audience's view — looking up at the underside from the floor — so the word reads correctly here; the controller pixel-map (defined from above) is its left↔right mirror, applied when the map is cut.</p>
+    <p class="cap">10 groups: <b>2 for JESUS · 3 star groups · 5 arcs</b>. JESUS splits into two groups along an arc boundary — hide it by matching each half to its arc, reveal it by lighting both a shared color. This is the audience's view — looking up at the underside from the floor — so the word reads correctly here; the controller pixel-map (defined from above) is its left↔right mirror, applied when the map is cut. <b>Row 1 is the upstage row</b> (over the stage, drawn at the bottom); <b>row 38 is downstage</b> (over the crowd, at the top). Rows 33–38 taper to fit the shorter installed wires.</p>
+    <div class="lock" id="lock"></div>
     <div class="bar">
-      <div class="fixed" style="min-width:200px">
-        <span class="k">Wave curvature</span>
-        <span class="fv">53 <small>locked · <span id="vCurve"></span></small></span>
-      </div>
-      <div class="ctl" style="min-width:150px">
-        <label>JESUS corner softening <span class="v" id="vCorner"></span></label>
-        <input type="range" id="corner" min="0" max="2" step="1" value="1">
-      </div>
-      <div class="ctl" style="min-width:150px">
-        <label>Star count <span class="v" id="vStars"></span></label>
-        <input type="range" id="stars" min="252" max="300" step="6" value="276">
-      </div>
-      <div class="ctl" style="min-width:150px">
-        <label>Wave speed <span class="v" id="vSpeed"></span></label>
-        <input type="range" id="speed" min="0.2" max="5" step="0.1" value="1">
-      </div>
+      <div class="fixed"><span class="k">Grid</span><span class="fv">52 × 38 <small>tapered · 1,868</small></span></div>
+      <div class="fixed"><span class="k">Spacing</span><span class="fv">15″ × 16″ <small>along row · between rows</small></span></div>
+      <div class="fixed"><span class="k">Arc widths</span><span class="fv">18·16·26·18·22 <small>% of span</small></span></div>
+      <div class="fixed"><span class="k">Stars</span><span class="fv">230 <small>110 · 60 · 60</small></span></div>
+      <div class="fixed"><span class="k">JESUS corners</span><span class="fv">soft <small>1 pass</small></span></div>
       <div class="modes" id="modes">
         <button data-m="demo" class="on">▶ Demo</button>
         <button data-m="waves">Waves</button>
@@ -191,29 +172,31 @@
     </div>
     <div class="stage"><canvas id="cv"></canvas></div>
     <div class="counts" id="counts"></div>
-    <p class="note acc"><b>Reading the demo:</b> waves roll upstage→downstage across the 5 arcs, the 3 star groups twinkle out of phase, then JESUS reveals — watch it lift out of the arcs and settle back in. Use <b>JESUS hidden / shown</b> to compare directly, and <b>Group map</b> for the raw assignment. Footprint 65′4″ × 52′0″, 16″ on center.</p>
-    <p class="note gold"><b>The JESUS camouflage:</b> the two JESUS groups are split along an arc boundary, so when "hidden" each half wears the color of the arc crossing it and the word disappears. It's cleanest when the word crosses exactly two arcs — the <b>camouflage %</b> below the canvas shows how well the current curvature achieves that. <b>Wave curvature is locked at 53</b> — it is the only setting with real headroom against the controller zones' LED stock: across the old 45–260 range only 51–55 fit at all, and everything else put a zone over its physical count. <b>Star count is limited to 252–300</b> for the same reason — fewer stars overflow the arc zones, more overflow the star zones, and the floor allows for the extra cells that the "softer" corner setting hands back to the arcs. The 3 star groups let the stars shimmer independently instead of blooming as one.</p>
+    <p class="note acc"><b>Reading the demo:</b> waves roll upstage→downstage across the 5 arcs, the 3 star groups twinkle out of phase, then JESUS reveals — watch it lift out of the arcs and settle back in. Use <b>JESUS hidden / shown</b> to compare directly, and <b>Group map</b> for the raw assignment. The faint grey line behind each row is that row's installed wire rope, so you can see the taper against the real hardware.</p>
+    <p class="note gold"><b>Why these exact numbers:</b> this design is <b>hard-coded</b> — there are no sliders anywhere in this document, so nobody can nudge it by accident. The arcs are concentric about a point 16 rows behind the upstage edge (the "tight rainbow" look), but their five widths are deliberately <b>not</b> quite equal (18 · 16 · 26 · 18 · 22% of the span) and the three star groups are weighted <b>110 · 60 · 60</b>: neither is visible from the floor, and together they balance the ten controller zones so that <b>every zone keeps at least 36 spare LEDs</b> against its stock. Camouflage is 97% — the word crosses four arcs, but 251 of its 260 fixtures sit in the two it wears. The page recomputes the map from these constants on load and checks it against the locked digest; if anyone edits a constant, the banner above turns red.</p>
   </section>
 
   <section class="panel">
     <h2><span class="idx">02</span>Side section <span class="ctx">house left, looking across</span></h2>
-    <p class="cap">The canopy is raked — lowest upstage over the stage, climbing to its highest edge downstage over the crowd — so the underside tips toward the upper seats and the lettering isn't hopelessly foreshortened. Aircraft cables hang level at the ceiling deck; each row's fishing line makes up the difference.</p>
+    <p class="cap">The canopy is raked — lowest upstage over the stage (row 1), climbing to its highest edge downstage over the crowd (row 38) — so the underside tips toward the upper seats and the lettering isn't hopelessly foreshortened. Wire rope hangs level at the ceiling deck; each row's fishing line makes up the difference.</p>
     <div class="dimbar">
-      <div class="ctl"><label>Downstage LED height <span class="v" id="vDown"></span></label><input type="range" id="down" min="20" max="33" step="0.5" value="31"></div>
-      <div class="ctl"><label>Upstage LED height <span class="v" id="vUp"></span></label><input type="range" id="up" min="13" max="24" step="0.5" value="18"></div>
+      <div class="fixed"><span class="k">Row 1 · upstage LED height</span><span class="fv">18′0″ <small>fixed · 19′0″ line</small></span></div>
+      <div class="fixed"><span class="k">Row 38 · downstage LED height</span><span class="fv">30′4″ <small>fixed · 6′8″ line</small></span></div>
+      <div class="fixed"><span class="k">Line step</span><span class="fv">4″ <small>shorter each row</small></span></div>
       <div class="fixed"><span class="k">Ceiling deck</span><span class="fv">37 ft <small>fixed</small></span></div>
       <div class="fixed"><span class="k">Stage height</span><span class="fv">3 ft <small>fixed</small></span></div>
+      <div class="fixed"><span class="k">Row pitch</span><span class="fv">16″ <small>38 rows · 49′4″</small></span></div>
     </div>
     <div class="svgwrap"><svg id="side" xmlns="http://www.w3.org/2000/svg"></svg></div>
-    <p class="note"><b>Real dimensions.</b> Deck 37&nbsp;ft (fixed); canopy raked 18&nbsp;ft upstage → 31&nbsp;ft downstage; stage 3&nbsp;ft high (fixed, 25&nbsp;ft deep at the upstage rows). Each row's fishing-line length = deck − that row's height. Drag the two LED-height sliders to explore alternative trims — the drawing and the cut list below update live. (Depth 52&#8242;&#8202;0&#8243; and 16&#8243; spacing are locked.)</p>
+    <p class="note"><b>Real dimensions.</b> Deck 37&nbsp;ft; canopy raked 18′&#8202;0″ at row&nbsp;1 (upstage) → 30′&#8202;4″ at row&nbsp;38 (downstage) over 49′&#8202;4″, ≈14.0°; stage 3&nbsp;ft high, 25&nbsp;ft deep at the upstage rows; 27&nbsp;ft from the downstage row to the upper-level risers. Fishing line is 19′&#8202;0″ at row&nbsp;1 and <b>exactly 4″ shorter every row</b> down to 6′&#8202;8″ at row&nbsp;38 — the same 4″ ladder as the original 40-row list — and each row's LED height is simply deck − line.</p>
   </section>
 
   <section class="panel">
     <h2><span class="idx">03</span>Rigging &amp; fishing-line cut list</h2>
-    <p class="cap">One aircraft cable per row runs level across the width at the deck; each LED drops on its own fishing line. Lengths update with the sliders above.</p>
+    <p class="cap">One wire rope per row is already installed level across the width at the deck; each LED drops on its own fishing line. Rows 1–32 carry 52 LEDs; the tapered rows 33–38 carry 44 · 40 · 36 · 32 · 28 · 24.</p>
     <div class="sum" id="sum"></div>
     <table class="cut" id="cut"></table>
-    <p class="note"><b>Ordering allowance:</b> add terminations to the cable (~1–2&nbsp;ft per end) and knot/tie-off to every drop (~10–15%). Row&nbsp;1 = downstage (shortest line); row&nbsp;40 = upstage (longest). Each length is used <b>×50</b> — one per column across the width.</p>
+    <p class="note"><b>Ordering allowance:</b> add knot/tie-off to every drop (~10–15%). <b>Row&nbsp;1 = upstage</b> (longest line, 19′&#8202;0″); <b>row&nbsp;38 = downstage</b> (shortest, 6′&#8202;8″). Every row is <b>exactly 4″ shorter</b> than the one before — the same ladder as the original 40-row list; its 6′&#8202;0″ and 6′&#8202;4″ lengths are simply no longer used. Each length is used once per LED in that row — the <b>LEDs</b> column is the multiplier.</p>
   </section>
 
   <section class="panel">
@@ -238,37 +221,63 @@
   </section>
 
   <section class="panel">
-    <h2><span class="idx">06</span>Row-by-row hang guide <span class="ctx">volunteer build sequence · follows the sliders live</span></h2>
-    <p class="cap">One strip per row cable, <b>Row 1 (downstage, over the crowd)</b> through <b>Row 40 (upstage, over the stage)</b>. Positions run <b>1–50</b> left to right, exactly as drawn in the overhead plan above. Each numbered square is one LED — the number is the <b>controller zone</b> (= the stock bin) to pull from. The line under each strip reads the same sequence as counts: <b>6×Z2</b> means &ldquo;six lights from Zone&nbsp;2 in a row.&rdquo; Line lengths follow the side-section trim sliders and match the cut list. <b>This guide tracks the explorer live</b> — the stamp below records the exact settings it was generated from. Reload the page to return to the defaults, and only hand this to volunteers once the design is locked.</p>
+    <h2><span class="idx">06</span>Row-by-row hang guide <span class="ctx">volunteer build sequence · locked design</span></h2>
+    <p class="cap">One strip per wire rope, <b>Row 1 (upstage, over the stage)</b> through <b>Row 38 (downstage, over the crowd)</b>. Positions run <b>1–52</b> left to right, exactly as drawn in the overhead plan above; on the tapered rows 33–38 the outer positions are left empty (dashed) so the columns stay lined up with the rows above — the header of each strip says where its first light goes. Each numbered square is one LED — the number is the <b>controller zone</b> (= the stock bin) to pull from. The line under each strip reads the same sequence as counts: <b>6×Z2</b> means &ldquo;six lights from Zone&nbsp;2 in a row.&rdquo; Line lengths match the cut list.</p>
     <div class="gset" id="gset"></div>
     <div class="glegend" id="glegend"></div>
-    <p class="note"><b>Zone stock limits:</b> Zones 1–2 hold 100 · Zones 3–4 hold 400 · Zones 5–6 hold 300 · Zones 7–8 hold 210 · Zones 9–10 hold 150. The legend reads <b>count/stock</b> — <span style="color:var(--accent)">teal</span> = fits with 10%+ spares, <span style="color:var(--gold)">gold</span> = fits with under 10% spares, <span style="color:var(--warn)">red</span> = over stock.</p>
-    <p class="note gold"><b>Orientation check before hanging:</b> this guide (like the overhead plan) is the audience&rsquo;s view from the floor, looking up. If you lay cables out on the deck or work from above, left↔right is mirrored — agree on which physical end of each cable is position&nbsp;1 before attaching the first light.</p>
+    <p class="note"><b>Zone stock limits:</b> Zones 1–2 hold 100 · Zones 3–4 hold 400 · Zones 5–6 hold 300 · Zones 7–8 hold 210 · Zones 9–10 hold 150. The legend reads <b>count/stock · spare</b> — <span style="color:var(--accent)">teal</span> = 20 or more spare LEDs, <span style="color:var(--gold)">gold</span> = under 20 spare, <span style="color:var(--warn)">red</span> = over stock.</p>
+    <p class="note gold"><b>Orientation check before hanging:</b> this guide (like the overhead plan) is the audience&rsquo;s view from the floor, looking up. If you lay wires out on the deck or work from above, left↔right is mirrored — agree on which physical end of each wire is position&nbsp;1 before attaching the first light. <b>The tapered rows are centered on their shorter wires</b> — measure from the wire's midpoint, not its end. Each strip's header gives the distance from the wire end to its first light (about 3½″ on the full rows; 7″ on row&nbsp;33, 3′&#8202;1″ on row&nbsp;34, 10½″ on row&nbsp;35, then 3′&#8202;4½″ / 5′&#8202;10½″ / 8′&#8202;4½″ on rows 36–38).</p>
     <div id="guide"></div>
   </section>
 
-  <footer>Zoe Conference 2026 · Light Grid · self-contained build reference</footer>
+  <footer>Zoe Conference 2026 · Light Grid · self-contained build reference · design locked 2026-09-17</footer>
 </div>
 
 <script>
-/* ================= shared design constants ================= */
-const COLS=50, ROWS=40, SPACING_FT=16/12;   // 16" on center
+/* ================= LOCKED DESIGN CONSTANTS =================
+   Row index r runs 0..37 where r = 0 is ROW 1 (upstage, over the stage) and r = 37 is ROW 38
+   (downstage, over the crowd). Displayed row = r + 1. Column c runs 0..51; position = c + 1.
+   Changing ANY constant below changes the physical map — the page will flag it (red banner)
+   because the recomputed map no longer matches EXPECTED_DIGEST. Re-lock deliberately or revert. */
+const COLS=52, ROWS=38;
+const SX=15/12, SY=16/12;                       // 15" along the row · 16" between rows (feet)
+const TAPER=[44,40,36,32,28,24];                // LEDs on rows 33..38, centered on the wire
+const WIRE_FT=r=> r<32?64.33 : r<34?54.9 : 45.5; // installed wire rope per row (rows 1–32 / 33–34 / 35–38)
+const rowSpan=r=>{const w=r<32?COLS:TAPER[r-32]; const s=(COLS-w)/2; return [s,s+w];};   // [first, last+1)
 const LETTERS={
   J:[[6,0,2,14],[0,12,6,2],[0,10,2,2]],
   E:[[0,0,2,14],[0,0,8,2],[0,6,6,2],[0,12,8,2]],
   S:[[0,0,8,2],[0,2,2,4],[0,6,8,2],[6,8,2,4],[0,12,8,2]],
   U:[[0,0,2,12],[6,0,2,12],[0,12,8,2]],
 };
-const WORD="JESUS", WORD_X0=1, WORD_Y0=11, LETTER_PITCH=10;   // rows 11–24 (displayed 12–25) — 1 row upstage buys zone-stock headroom
+const WORD="JESUS", WORD_X0=2, WORD_Y0=12, LETTER_PITCH=10, CORNER_PASSES=1;   // positions 3–50 · rows 13–26 · glyph tops toward downstage
+const CURVE=16;                                 // arc center = 16 rows (21'4") behind the upstage edge, on the centerline
+const ARC_EDGES=[0.18,0.34,0.60,0.78];          // band boundaries as fractions of the min→max distance span (widths 18·16·26·18·22 %)
 const NBANDS=5;
+const STARS=230, STAR_PATTERN=[...Array(11).fill('S1'),...Array(6).fill('S2'),...Array(6).fill('S3')];   // 11:6:6 → 110 · 60 · 60
+const SHUFFLE_SEED=20260709;
+// group → controller zone (= volunteer bin) with that zone's LED stock. Biggest groups sit in the biggest bins.
+const ZONES={B3:{z:3,cap:400},B5:{z:4,cap:400},B2:{z:5,cap:300},B4:{z:6,cap:300},JA:{z:7,cap:210},
+             B1:{z:8,cap:210},S1:{z:9,cap:150},JB:{z:10,cap:150},S2:{z:1,cap:100},S3:{z:2,cap:100}};
+const EXPECTED={B1:152,B2:263,B3:362,B4:259,B5:342,S1:110,S2:60,S3:60,JA:174,JB:86};
+const EXPECTED_DIGEST='4740ac28';               // FNV-1a of the zone map, exported 2026-09-17 (see generate_light_grid_maps.py)
+const LINE_TOP_FT=19, LINE_STEP_FT=4/12;        // fishing line: 19′0″ at row 1 (upstage), exactly 4″ shorter every row → 6′8″ at row 38 (the original 40-row ladder)
+const lineLen=r=>LINE_TOP_FT-r*LINE_STEP_FT;    // feet, by row index
+const SIDE={deck:37, stage:3};                  // all fixed — LED heights follow the line ladder
+SIDE.up=SIDE.deck-lineLen(0); SIDE.down=SIDE.deck-lineLen(ROWS-1);   // 18′0″ at row 1 · 30′4″ at row 38
+const STAGE_DEPTH=25, GAP_FT=27;
 const KEY=(c,r)=>c+","+r;
+
+const ACTIVE=[]; for(let r=0;r<ROWS;r++){const [s,e]=rowSpan(r); for(let c=s;c<e;c++) ACTIVE.push([c,r]);}
+const TOTAL=ACTIVE.length;                      // 1,868
+const WIDTH_FT=(COLS-1)*SX, DEPTH_FT=(ROWS-1)*SY;   // 63'9" × 49'4"
 
 function jesusCells(){
   const s=new Set();
   [...WORD].forEach((ch,k)=>{
     const lx=WORD_X0+k*LETTER_PITCH;
     for(const [x,y,w,h] of LETTERS[ch])
-      for(let i=x;i<x+w;i++) for(let j=y;j<y+h;j++) s.add(KEY(lx+i,WORD_Y0+j));
+      for(let i=x;i<x+w;i++) for(let j=y;j<y+h;j++) s.add(KEY(lx+i, WORD_Y0+(13-j)));   // flip: glyph top (y=0) toward downstage
   });
   return s;
 }
@@ -280,50 +289,43 @@ function ftin(f){
   const fr={0:'',1:'⅛',2:'¼',3:'⅜',4:'½',5:'⅝',6:'¾',7:'⅞'}[e];
   return `${ftw}′ ${inch}${fr}″`;
 }
+function fnv1a(s){let h=0x811C9DC5; for(let i=0;i<s.length;i++){h^=s.charCodeAt(i); h=Math.imul(h,0x01000193)>>>0;} return h.toString(16).padStart(8,'0');}
 
-/* ================= SECTION 1 — mapping explorer ================= */
+/* ================= SECTION 1 — mapping (computed once from the constants) ================= */
 function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
-const allCells=[]; for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++)allCells.push([c,r]);
-const shuffled=allCells.slice();
-(function(){const rng=mulberry32(20260709);for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}})();
+const shuffled=ACTIVE.slice();
+(function(){const rng=mulberry32(SHUFFLE_SEED);for(let i=shuffled.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}})();
 function emptyNeighbors(set,c,r){let n=0;for(let dc=-1;dc<=1;dc++)for(let dr=-1;dr<=1;dr++){if(!dc&&!dr)continue;if(!set.has(KEY(c+dc,r+dr)))n++;}return n;}
 
-let P={curve:53, corner:1, stars:276, speed:1};   // defaults maximize the SMALLEST physical LED spare across the 10 zones (276 stars → ≥7 spare everywhere; 288 gave a better % but only 4 spare in Z1). speed is view-only — no effect on the build
 let mode='demo';
-let wavePhase=0, prevT=null;   // accumulated wave angle — advanced per-frame so the speed slider changes rate with no phase jump
-let group=new Map();
-let counts={};
-let jesusRemoved=0, jaBand=1, jbBand=2, fidelity=100, bandsCrossed=0;
+let wavePhase=0, prevT=null;
+let group=new Map(), counts={};
+let jesusRemoved=0, jaBand=1, jbBand=2, fidelity=100, bandsCrossed=0, digest='', designOK=false, designMsg='';
 
-function rebuild(){
-  const full=jesusCells();
-  const jesus=new Set(full);
+function build(){
+  const jesus=jesusCells();
   jesusRemoved=0;
-  for(let pass=0; pass<P.corner; pass++){                    // iterative convex-corner erosion
+  for(let pass=0; pass<CORNER_PASSES; pass++){                  // simultaneous convex-corner erosion
     const rem=[];
     for(const key of jesus){const [c,r]=key.split(',').map(Number); if(emptyNeighbors(jesus,c,r)>=5) rem.push(key);}
     rem.forEach(k=>jesus.delete(k)); jesusRemoved+=rem.length;
   }
-  // scattered stars → 3 groups (round-robin over the seeded shuffle)
   const starCells=[];
-  for(const [c,r] of shuffled){ if(starCells.length>=P.stars) break; const k=KEY(c,r); if(!jesus.has(k)) starCells.push(k); }
-  // band scaffolding (5 bands over the full distance range)
-  const CX=24.5, CY=P.curve;
+  for(const [c,r] of shuffled){ if(starCells.length>=STARS) break; const k=KEY(c,r); if(!jesus.has(k)) starCells.push(k); }
+  // concentric arcs, measured in FEET so they are true circles on the 15"×16" cells
+  const CX=(COLS-1)/2, CY=-CURVE;
+  const dist=(c,r)=>{const dx=(c-CX)*SX, dy=(r-CY)*SY; return Math.sqrt(dx*dx+dy*dy);};
   let dmin=Infinity,dmax=-Infinity;
-  for(const [c,r] of allCells){const d=Math.hypot(c-CX,r-CY); if(d<dmin)dmin=d; if(d>dmax)dmax=d;}
-  const bw=(dmax-dmin)/NBANDS;
-  const bandAt=(c,r)=>Math.min(NBANDS,Math.floor((Math.hypot(c-CX,r-CY)-dmin)/bw)+1);
-  // JESUS → 2 groups split along a band arc. Pick the band boundary that hides the
-  // most fixtures: each group is colored as its most-populous band, so the split arc
-  // matches a real band edge and camouflage is maximized.
+  for(const [c,r] of ACTIVE){const d=dist(c,r); if(d<dmin)dmin=d; if(d>dmax)dmax=d;}
+  const bandAt=(c,r)=>{const nd=(dist(c,r)-dmin)/(dmax-dmin); let b=1; for(const e of ARC_EDGES) if(nd>=e) b++; return Math.min(NBANDS,b);};
+  // JESUS → 2 groups split along the arc boundary that camouflages the most fixtures
   const jl=[...jesus].map(k=>{const [c,r]=k.split(',').map(Number);return {k,band:bandAt(c,r)};});
   const perBand={}; jl.forEach(f=>perBand[f.band]=(perBand[f.band]||0)+1);
   const crossed=[...new Set(jl.map(f=>f.band))].sort((a,b)=>a-b);
   bandsCrossed=crossed.length;
   if(crossed.length<=1){
     jaBand=jbBand=crossed[0]||1;
-    const half=Math.ceil(jl.length/2); jl.forEach((f,i)=> f.g=i<half?'JA':'JB');
-    fidelity=100;
+    const half=Math.ceil(jl.length/2); jl.forEach((f,i)=> f.g=i<half?'JA':'JB'); fidelity=100;
   } else {
     let bestScore=-1,bestK=crossed[0],bestJA=crossed[0],bestJB=crossed[crossed.length-1];
     for(let ci=0;ci<crossed.length-1;ci++){
@@ -338,13 +340,20 @@ function rebuild(){
     jl.forEach(f=> f.g = f.band<=bestK?'JA':'JB');
     fidelity=Math.round(100*bestScore/jl.length);
   }
-  // assemble group map: bands first, stars override, JESUS override
   group=new Map();
-  for(const [c,r] of allCells) group.set(KEY(c,r),'B'+bandAt(c,r));
-  starCells.forEach((k,i)=> group.set(k,'S'+(i%3+1)));
+  for(const [c,r] of ACTIVE) group.set(KEY(c,r),'B'+bandAt(c,r));
+  starCells.forEach((k,i)=> group.set(k,STAR_PATTERN[i%STAR_PATTERN.length]));
   jl.forEach(f=> group.set(f.k,f.g));
   counts={JA:0,JB:0,S1:0,S2:0,S3:0}; for(let b=1;b<=NBANDS;b++)counts['B'+b]=0;
   for(const g of group.values()) counts[g]++;
+  // lock check: counts + digest must match what the generator/CSV were cut from
+  let s=''; for(const [c,r] of ACTIVE) s+=ZONES[group.get(KEY(c,r))].z+',';
+  digest=fnv1a(s);
+  const bad=Object.keys(EXPECTED).filter(g=>counts[g]!==EXPECTED[g]);
+  designOK = digest===EXPECTED_DIGEST && bad.length===0 && TOTAL===1868;
+  designMsg = designOK ? `DESIGN LOCKED · map digest ${digest} · ${TOTAL.toLocaleString()} fixtures · camouflage ${fidelity}% · matches generate_light_grid_maps.py / group_map.csv`
+                       : `DESIGN CHECK FAILED · digest ${digest} ≠ ${EXPECTED_DIGEST}${bad.length?' · counts off: '+bad.map(g=>g+' '+counts[g]+'≠'+EXPECTED[g]).join(', '):''} · a constant was edited — the CSV and this page no longer agree`;
+  const lk=document.getElementById('lock'); lk.textContent=designMsg; lk.classList.toggle('bad',!designOK);
   paintCounts();
 }
 
@@ -354,7 +363,6 @@ function mix(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2
 function waveArr(l){l=Math.max(0,Math.min(1,l));const deep=[8,26,58],midc=[28,140,190],crest=[205,246,255];return l<0.5?mix(deep,midc,l*2):mix(midc,crest,(l-0.5)*2);}
 function waveRGB(l){const m=waveArr(l);return `rgb(${m[0]|0},${m[1]|0},${m[2]|0})`;}
 function hexRGB(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
-// pre-rendered soft-bloom sprites — radial falloff to zero, so glow diffuses like real LED halation
 function glowSprite(col){
   const s=document.createElement('canvas'); s.width=s.height=64;
   const g=s.getContext('2d'), grad=g.createRadialGradient(32,32,0,32,32,32);
@@ -366,42 +374,50 @@ const GLOW={S:glowSprite('255,247,225'),J:glowSprite('255,215,110'),B:glowSprite
 const MAPGLOW={}; for(const k in MAPCOL) MAPGLOW[k]=glowSprite(hexRGB(MAPCOL[k]).join(','));
 
 const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
-const CW=1180, CH=Math.round(CW*ROWS/COLS)+56;
+const CW=1180, OXL=66, OXR=48;                     // extra left margin for the row numbers
+const sx=(CW-OXL-OXR)/(COLS-1), sy=sx*(SY/SX);     // cells drawn 15:16 like the real grid
+const gw=sx*(COLS-1), gh=sy*(ROWS-1);
+const oy=58, CH=Math.round(oy+gh+64);
 let dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));
 function sizeCanvas(){ cv.width=CW*dpr; cv.height=CH*dpr; cv.style.aspectRatio=CW+'/'+CH; ctx.setTransform(dpr,0,0,dpr,0,0); }
 sizeCanvas();
-const CM=48;
-const step=Math.min((CW-2*CM)/(COLS-1),(CH-2*CM-20)/(ROWS-1));
-const gw=step*(COLS-1), gh=step*(ROWS-1);
-const ox=(CW-gw)/2, oy=(CH-gh)/2+4;
-const X=c=>ox+c*step, Y=r=>oy+r*step;           // row 0 (downstage) at top
-const R=step*0.09;
+const X=c=>OXL+c*sx, Y=r=>oy+(ROWS-1-r)*sy;        // row 38 (downstage) at top, row 1 (upstage) at bottom
+const R=sx*0.115;
+const wireHalfPx=r=>(WIRE_FT(r)/SX)*sx/2;           // half the installed wire length, in canvas px
 
 function smooth(e0,e1,x){x=Math.min(1,Math.max(0,(x-e0)/(e1-e0)));return x*x*(3-2*x);}
 function pulse(t,a,b,f){return smooth(a-f,a,t)*(1-smooth(b,b+f,t));}
-const WSPREAD=0.95;   // phase offset per arc (was 1.15 with a hard-clipped wave) — smaller = crests overlap more across the 5 arcs
+const WSPREAD=0.95;
 function levels(time,wph){
-  const wp=b=>0.5+0.5*Math.sin(wph - b*WSPREAD);                  // smooth raised sine (no hard clip) → arcs crossfade instead of snapping on then sitting dark
-  const tw=j=>0.12+0.88*(0.5+0.5*Math.sin(time*1.7 + j*2.094));   // per-star-group twinkle (real time — independent of wave speed)
+  const wp=b=>0.5+0.5*Math.sin(wph - b*WSPREAD);
+  const tw=j=>0.12+0.88*(0.5+0.5*Math.sin(time*1.7 + j*2.094));
   let wEnv=1, sEnv=0.05, reveal=0;
   if(mode==='waves'){ wEnv=1; sEnv=0.05; reveal=0; }
   else if(mode==='starsm'){ wEnv=0.14; sEnv=1; reveal=0; }
   else if(mode==='hide'){ wEnv=0.92; sEnv=0.06; reveal=0; }
   else if(mode==='show'){ wEnv=0.92; sEnv=0.06; reveal=1; }
   else { const T=24, tt=time%T; sEnv=pulse(tt,7,12,1.6); reveal=pulse(tt,15,20,1.6); wEnv=Math.max(0.55,1-0.25*reveal); }
-  const bl=[0]; for(let b=1;b<=NBANDS;b++) bl[b]=wEnv*(0.12+0.88*Math.pow(wp(b),1.6));   // gentler peak → wider, overlapping crests
+  const bl=[0]; for(let b=1;b<=NBANDS;b++) bl[b]=wEnv*(0.12+0.88*Math.pow(wp(b),1.6));
   const sl=[0]; for(let j=1;j<=3;j++) sl[j]=sEnv*tw(j);
   return {bl,sl,reveal};
+}
+function wires(){
+  ctx.strokeStyle='rgba(255,255,255,.07)'; ctx.lineWidth=1;
+  const cxp=X((COLS-1)/2);
+  for(let r=0;r<ROWS;r++){ const y=Y(r), h=wireHalfPx(r); ctx.beginPath(); ctx.moveTo(cxp-h,y); ctx.lineTo(cxp+h,y); ctx.stroke(); }
+  ctx.fillStyle='rgba(154,147,130,.6)'; ctx.font="9px ui-monospace,Menlo,monospace"; ctx.textAlign='right';
+  for(let r=0;r<ROWS;r++) ctx.fillText(r+1, OXL-14, Y(r)+3);
 }
 function draw(ts){
   const time=ts/1000;
   if(prevT===null) prevT=time;
-  const dt=Math.min(0.05,Math.max(0,time-prevT)); prevT=time;   // clamp dt so a backgrounded tab doesn't lurch the waves on return
-  wavePhase+=dt*0.9*P.speed;                                    // 0.9 rad/s at speed 1 = the original wave rate
+  const dt=Math.min(0.05,Math.max(0,time-prevT)); prevT=time;
+  wavePhase+=dt*0.9;
   ctx.clearRect(0,0,CW,CH); ctx.fillStyle='#02040a'; ctx.fillRect(0,0,CW,CH);
+  wires();
   if(mode==='map'){ drawMap(); requestAnimationFrame(draw); return; }
   const {bl,sl,reveal}=levels(time,wavePhase); const gold=[255,215,110];
-  for(const [c,r] of allCells){
+  for(const [c,r] of ACTIVE){
     const g=group.get(KEY(c,r)), x=X(c), y=Y(r);
     ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle='#0c1728'; ctx.fill();
     if(g[0]==='B'){ ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle=waveRGB(bl[+g.slice(1)]); ctx.fill(); }
@@ -410,10 +426,10 @@ function draw(ts){
       ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle=`rgb(${col[0]|0},${col[1]|0},${col[2]|0})`; ctx.fill(); }
   }
   ctx.globalCompositeOperation='lighter';
-  for(const [c,r] of allCells){
+  for(const [c,r] of ACTIVE){
     const g=group.get(KEY(c,r)), x=X(c), y=Y(r); let lvl=0, spr=null;
     if(g[0]==='S'){lvl=sl[+g.slice(1)];spr=GLOW.S;}
-    else if(g[0]==='J'){ const hb=bl[g==='JA'?jaBand:jbBand];   // camouflaged word blooms like its host arc
+    else if(g[0]==='J'){ const hb=bl[g==='JA'?jaBand:jbBand];
       if(reveal>hb){lvl=reveal;spr=GLOW.J;} else if(hb>0.62){lvl=hb;spr=GLOW.B;} }
     else { const b=+g.slice(1); if(bl[b]>0.62){lvl=bl[b];spr=GLOW.B;} }
     if(spr && lvl>0.5){ const gr=R*11;
@@ -425,16 +441,15 @@ function draw(ts){
   requestAnimationFrame(draw);
 }
 function drawMap(){
-  // every fixture blooms in its full group color — stars/JESUS glow bigger so overrides pop over the arcs
   ctx.globalCompositeOperation='lighter';
-  for(const [c,r] of allCells){
+  for(const [c,r] of ACTIVE){
     const g=group.get(KEY(c,r)), x=X(c), y=Y(r);
     const band=g[0]==='B', gr=band?R*4.5:R*6.5;
     ctx.globalAlpha=band?.5:.85;
     ctx.drawImage(MAPGLOW[g],x-gr,y-gr,gr*2,gr*2);
   }
   ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
-  for(const [c,r] of allCells){ const g=group.get(KEY(c,r)), x=X(c), y=Y(r);
+  for(const [c,r] of ACTIVE){ const g=group.get(KEY(c,r)), x=X(c), y=Y(r);
     ctx.beginPath(); ctx.arc(x,y,g[0]==='B'?R:R*1.2,0,7); ctx.fillStyle=MAPCOL[g]; ctx.fill();
     if(g[0]==='J'){ ctx.lineWidth=0.8; ctx.strokeStyle='rgba(255,244,200,.85)'; ctx.stroke(); } }
   clabels();
@@ -442,52 +457,39 @@ function drawMap(){
 function clabels(){
   ctx.textAlign='center';
   ctx.fillStyle='rgba(240,233,219,.92)'; ctx.font='600 13px '+getComputedStyle(document.body).fontFamily;
-  ctx.fillText('DOWNSTAGE — over the crowd', CW/2, oy-18);
-  ctx.fillText('UPSTAGE — over the stage', CW/2, oy+gh+24);
+  ctx.fillText('DOWNSTAGE — over the crowd · row 38', OXL+gw/2, oy-22);
+  ctx.fillText('UPSTAGE — over the stage · row 1', OXL+gw/2, oy+gh+26);
   ctx.fillStyle='rgba(154,147,130,.75)'; ctx.font="11px ui-monospace,Menlo,monospace";
-  ctx.fillText('65′4″ wide · 50 @ 16″ o.c.', CW/2, oy+gh+42);
-  ctx.save(); ctx.translate(ox-24, oy+gh/2); ctx.rotate(-Math.PI/2);
-  ctx.fillText('52′0″ deep · 40 @ 16″ o.c.', 0, 0); ctx.restore();
+  ctx.fillText('63′9″ wide · 52 @ 15″ o.c. · rows 33–38 taper 44·40·36·32·28·24 · grey = installed wire', OXL+gw/2, oy+gh+44);
+  ctx.save(); ctx.translate(OXL-44, oy+gh/2); ctx.rotate(-Math.PI/2);
+  ctx.fillText('49′4″ deep · 38 rows @ 16″ o.c.', 0, 0); ctx.restore();
 }
 function paintCounts(){
   const box=document.getElementById('counts');
   const items=[['JA','JESUS A'],['JB','JESUS B'],['S1','Stars 1'],['S2','Stars 2'],['S3','Stars 3']];
   for(let b=1;b<=NBANDS;b++) items.push(['B'+b,'Arc '+b]);
   box.innerHTML=items.map(([g,l])=>`<span class="c"><span class="sw" style="background:${MAPCOL[g]}"></span>${l} <span class="n">${counts[g]}</span></span>`).join('')
-    + `<span class="c" style="color:var(--muted)">JESUS crosses <span class="n">${bandsCrossed}</span> arc(s) · camouflage <span class="n" style="color:${fidelity>=100?'var(--accent)':'var(--gold)'}">${fidelity}%</span></span>`
+    + `<span class="c" style="color:var(--muted)">JESUS crosses <span class="n">${bandsCrossed}</span> arcs · wears Arc ${jaBand} / Arc ${jbBand} · camouflage <span class="n" style="color:${fidelity>=100?'var(--accent)':'var(--gold)'}">${fidelity}%</span></span>`
     + `<span class="c" style="color:var(--muted)">corners reassigned <span class="n">${jesusRemoved}</span></span>`;
   const cj=document.getElementById('chipJesus'); if(cj) cj.innerHTML='JESUS = <b>'+(counts.JA+counts.JB)+'</b>';
 }
-function curveWord(v){ return v<70?'tight (rainbow-ish)':v<120?'gentle waves':v<190?'long rollers':'nearly flat'; }
-function speedWord(v){ return v<0.6?'slow drift':v<1.25?'natural':v<2.1?'brisk':v<3.6?'fast':'blazing'; }
-const cornerWords=['off (full word)','soft','softer'];
-const $=id=>document.getElementById(id);
-function syncMapping(){ $('vCurve').textContent=curveWord(P.curve); $('vCorner').textContent=cornerWords[P.corner]; $('vStars').textContent=P.stars; $('vSpeed').textContent=P.speed.toFixed(1)+'× · '+speedWord(P.speed); }
-/* wave curvature is LOCKED at 53 — the only value with real zone-stock headroom (of 45–260, only 51–55 fit at
-   all). It is a fixed readout now, not a slider, so there is no oninput handler here by design. */
-$('corner').oninput=e=>{P.corner=+e.target.value;syncMapping();rebuild();};
-$('stars').oninput=e=>{P.stars=+e.target.value;syncMapping();rebuild();};
-$('speed').oninput=e=>{P.speed=+e.target.value;syncMapping();};   // no rebuild — speed only changes the animation rate, not the mapping
 document.getElementById('modes').onclick=e=>{const b=e.target.closest('button');if(!b)return;
   mode=b.dataset.m; [...document.querySelectorAll('#modes button')].forEach(x=>x.classList.toggle('on',x===b));};
 window.addEventListener('resize',()=>{dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));sizeCanvas();});
 
-/* ================= SECTION 2 — side section (interactive) ================= */
-const SIDE={deck:37, up:18, down:31, stage:3};   // deck & stage fixed; up/down are sliders
-const STAGE_DEPTH=25;
-const WIDTH_FT=(COLS-1)*SPACING_FT;
-const J_LO=WORD_Y0, J_HI=WORD_Y0+13;             // JESUS band row range (moves with the word)
+/* ================= SECTION 2 — side section ================= */
+const J_LO=WORD_Y0, J_HI=WORD_Y0+13;            // JESUS rows (r 15–28 → displayed 16–29)
+const rowH=r=>SIDE.deck-lineLen(r);              // r=0 upstage (18′0″) → r=37 downstage (30′4″)
 
 function drawSide(){
   const svg=document.getElementById('side'); svg.innerHTML='';
   const ppf=11, mL=95, mR=70, mB=95;
-  const depthFt=(ROWS-1)*SPACING_FT, GAP_FT=27, riseRun=18, audRunFt=GAP_FT+riseRun;
-  const W=mL+(depthFt+audRunFt)*ppf+mR, H=650;
+  const riseRun=18, audRunFt=GAP_FT+riseRun;
+  const W=mL+(DEPTH_FT+audRunFt)*ppf+mR, H=650;
   svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
   const floor=H-mB, yF=f=>floor-f*ppf;
-  const xUp=mL, xDown=mL+depthFt*ppf, xFt=f=>xUp+f*ppf;
-  const rowX=r=>xUp+((ROWS-1-r)/(ROWS-1))*(xDown-xUp);
-  const rowH=r=>SIDE.up+((ROWS-1-r)/(ROWS-1))*(SIDE.down-SIDE.up);
+  const xUp=mL, xDown=mL+DEPTH_FT*ppf, xFt=f=>xUp+f*ppf;
+  const rowX=r=>xUp+(r/(ROWS-1))*(xDown-xUp);
   const t=(x,y,cls,txt,anchor='middle')=>{const e=el('text',{x,y,class:cls,'text-anchor':anchor});e.innerHTML=txt;svg.appendChild(e);};
   const deckY=yF(SIDE.deck), backX=xUp-28;
 
@@ -499,70 +501,69 @@ function drawSide(){
 
   svg.appendChild(el('line',{x1:backX,y1:floor,x2:W-mR,y2:floor,stroke:'#454136','stroke-width':1.5}));
 
-  const gapEnd=xFt(depthFt+GAP_FT), audEnd=xFt(depthFt+audRunFt);
+  const gapEnd=xFt(DEPTH_FT+GAP_FT), audEnd=xFt(DEPTH_FT+audRunFt);
   svg.appendChild(el('polyline',{points:`${xDown},${floor} ${gapEnd},${floor} ${audEnd},${yF(15)}`,fill:'none',stroke:'#4f4a3e','stroke-width':2}));
   for(let i=1;i<=7;i++){const fx=GAP_FT+i*(riseRun/8), fy=(i/8)*15;
-    svg.appendChild(el('line',{x1:xFt(depthFt+fx),y1:yF(fy),x2:xFt(depthFt+fx)+7,y2:yF(fy)+9,stroke:'#4f4a3e','stroke-width':1.5}));}
-  t(xFt(depthFt+GAP_FT+riseRun/2), yF(0)+22, 'lbl mut', 'AUDIENCE — upper level');
-  // GAP_FT gap between the downstage row and the start of the upper level
+    svg.appendChild(el('line',{x1:xFt(DEPTH_FT+fx),y1:yF(fy),x2:xFt(DEPTH_FT+fx)+7,y2:yF(fy)+9,stroke:'#4f4a3e','stroke-width':1.5}));}
+  t(xFt(DEPTH_FT+GAP_FT+riseRun/2), yF(0)+22, 'lbl mut', 'AUDIENCE — upper level');
   svg.appendChild(el('line',{x1:xDown,y1:floor+34,x2:gapEnd,y2:floor+34,class:'dimline'}));
   svg.appendChild(el('line',{x1:gapEnd,y1:floor+30,x2:gapEnd,y2:floor+38,class:'dimline'}));
   t((xDown+gapEnd)/2, floor+50, 'dim', `${GAP_FT} ft`);
 
   svg.appendChild(el('rect',{x:backX,y:deckY-7,width:(xDown+30-backX),height:7,fill:'#191712',stroke:'#4f4a3e'}));
   for(let x=backX+6;x<xDown+26;x+=16) svg.appendChild(el('line',{x1:x,y1:deckY-7,x2:x-6,y2:deckY-13,stroke:'#4f4a3e','stroke-width':1}));
-  t(xFt(depthFt*0.5), deckY-20, 'lbl', `CEILING DECK — ${SIDE.deck} ft`);
+  t(xFt(DEPTH_FT*0.5), deckY-20, 'lbl', `CEILING DECK — ${SIDE.deck} ft`);
 
-  for(let r=ROWS-1;r>=0;r--){ const x=rowX(r), yl=yF(rowH(r));
+  for(let r=0;r<ROWS;r++){ const x=rowX(r), yl=yF(rowH(r));
     svg.appendChild(el('line',{x1:x,y1:deckY,x2:x,y2:yl,stroke:'#5a5342','stroke-width':0.8,opacity:.75}));
     svg.appendChild(el('circle',{cx:x,cy:deckY,r:1.6,fill:'#a39a84'})); }
 
   svg.appendChild(el('line',{x1:rowX(J_LO),y1:yF(rowH(J_LO)),x2:rowX(J_HI),y2:yF(rowH(J_HI)),stroke:'#ffd76b','stroke-width':8,'stroke-linecap':'round',opacity:.28}));
 
-  svg.appendChild(el('line',{x1:rowX(39),y1:yF(rowH(39)),x2:rowX(0),y2:yF(rowH(0)),stroke:'var(--accent)','stroke-width':2.5}));
-  for(let r=ROWS-1;r>=0;r--){ const x=rowX(r), y=yF(rowH(r)), jr=r>=J_LO&&r<=J_HI;
+  svg.appendChild(el('line',{x1:rowX(0),y1:yF(rowH(0)),x2:rowX(ROWS-1),y2:yF(rowH(ROWS-1)),stroke:'var(--accent)','stroke-width':2.5}));
+  for(let r=0;r<ROWS;r++){ const x=rowX(r), y=yF(rowH(r)), jr=r>=J_LO&&r<=J_HI;
     svg.appendChild(el('circle',{cx:x,cy:y,r:3.4,fill:jr?'#ffd76b':'#7ff0dc'})); }
   const clx=(xUp+xDown)/2;
-  t(clx, deckY+50, 'lbl', 'RAKED CANOPY — 2,000 points');
+  t(clx, deckY+50, 'lbl', `RAKED CANOPY — ${TOTAL.toLocaleString()} points`);
   t(clx, deckY+66, 'lbl mut', `JESUS rows (${J_LO+1}–${J_HI+1})`);
 
+  t(rowX(ROWS-1)+7,(deckY+yF(rowH(ROWS-1)))/2,'dim',`${ftin(SIDE.deck-rowH(ROWS-1))} line`,'start');
   t(rowX(0)+7,(deckY+yF(rowH(0)))/2,'dim',`${ftin(SIDE.deck-rowH(0))} line`,'start');
-  t(rowX(39)+7,(deckY+yF(rowH(39)))/2,'dim',`${ftin(SIDE.deck-rowH(39))} line`,'start');
 
-  svg.appendChild(el('line',{x1:xDown,y1:yF(rowH(0)),x2:xDown,y2:floor,stroke:'var(--muted)','stroke-width':1,'stroke-dasharray':'2 4'}));
-  t(xDown+8,(yF(rowH(0))+floor)/2,'dim',`${SIDE.down} ft`,'start');
-  svg.appendChild(el('line',{x1:xUp,y1:yF(rowH(39)),x2:xUp,y2:floor,stroke:'var(--muted)','stroke-width':1,'stroke-dasharray':'2 4'}));
-  t(xUp-8,(yF(rowH(39))+yF(SIDE.stage))/2,'dim',`${SIDE.up} ft`,'end');
+  svg.appendChild(el('line',{x1:xDown,y1:yF(rowH(ROWS-1)),x2:xDown,y2:floor,stroke:'var(--muted)','stroke-width':1,'stroke-dasharray':'2 4'}));
+  t(xDown+8,(yF(rowH(ROWS-1))+floor)/2,'dim',ftin(SIDE.down),'start');
+  svg.appendChild(el('line',{x1:xUp,y1:yF(rowH(0)),x2:xUp,y2:floor,stroke:'var(--muted)','stroke-width':1,'stroke-dasharray':'2 4'}));
+  t(xUp-8,(yF(rowH(0))+yF(SIDE.stage))/2,'dim',ftin(SIDE.up),'end');
 
   const yd=floor+34;
   svg.appendChild(el('line',{x1:xUp,y1:yd,x2:xDown,y2:yd,class:'dimline'}));
   [xUp,xDown].forEach(x=>svg.appendChild(el('line',{x1:x,y1:yd-4,x2:x,y2:yd+4,class:'dimline'})));
-  t((xUp+xDown)/2,yd+16,'dim','52&#8242;&#8202;0&#8243; canopy depth · 40 rows @ 16&#8243; o.c.');
-  t(xUp,yd-8,'dim','upstage','start'); t(xDown,yd-8,'dim','downstage','end');
+  t((xUp+xDown)/2,yd+16,'dim','49&#8242;&#8202;4&#8243; canopy depth · 38 rows @ 16&#8243; o.c.');
+  t(xUp,yd-8,'dim','row 1 · upstage','start'); t(xDown,yd-8,'dim','row 38 · downstage','end');
 
-  const ang=(Math.atan2((SIDE.down-SIDE.up),depthFt)*180/Math.PI).toFixed(1);
-  t(rowX(20)+6,yF(rowH(20))+16,'dim',`rake ≈ ${ang}°`,'start');
+  const ang=(Math.atan2((SIDE.down-SIDE.up),DEPTH_FT)*180/Math.PI).toFixed(1);
+  t(rowX(19)+6,yF(rowH(19))+16,'dim',`rake ≈ ${ang}°`,'start');
 
-  const eyeX=xFt(depthFt+GAP_FT+14), eyeY=yF(13.5);
+  const eyeX=xFt(DEPTH_FT+GAP_FT+14), eyeY=yF(13.5);
   svg.appendChild(el('circle',{cx:eyeX,cy:eyeY,r:3,fill:'var(--warn)'}));
   t(eyeX,eyeY-8,'dim','upper-seat eye');
-  [[rowX(0),rowH(0)],[rowX(39),rowH(39)]].forEach(([x,h])=>svg.appendChild(el('line',{x1:eyeX,y1:eyeY,x2:x,y2:yF(h),stroke:'var(--warn)','stroke-width':1,'stroke-dasharray':'4 4',opacity:.7})));
+  [[rowX(ROWS-1),rowH(ROWS-1)],[rowX(0),rowH(0)]].forEach(([x,h])=>svg.appendChild(el('line',{x1:eyeX,y1:eyeY,x2:x,y2:yF(h),stroke:'var(--warn)','stroke-width':1,'stroke-dasharray':'4 4',opacity:.7})));
 }
 
+/* ================= SECTION 3 — rigging ================= */
 function computeRigging(){
-  const depthFt=(ROWS-1)*SPACING_FT;
-  const lens=[]; for(let r=0;r<ROWS;r++){ const h=SIDE.up+((ROWS-1-r)/(ROWS-1))*(SIDE.down-SIDE.up); lens.push(SIDE.deck-h); }
-  const sumCol=lens.reduce((a,b)=>a+b,0);
-  const totalFish=Math.round(sumCol*COLS), cable=Math.round(ROWS*WIDTH_FT);   // round: 16" o.c. makes the width non-integer
-  const ang=(Math.atan2((SIDE.down-SIDE.up),depthFt)*180/Math.PI).toFixed(1);
+  const lens=[], nled=[]; let totalFish=0, wire=0;
+  for(let r=0;r<ROWS;r++){ const [s,e]=rowSpan(r); lens.push(SIDE.deck-rowH(r)); nled.push(e-s); totalFish+=(e-s)*lens[r]; wire+=WIRE_FT(r); }
+  const ang=(Math.atan2((SIDE.down-SIDE.up),DEPTH_FT)*180/Math.PI).toFixed(1);
   const box=(k,v,s)=>`<div class="b"><span class="k">${k}</span><span class="val">${v}</span><span class="k" style="display:block;margin-top:3px">${s}</span></div>`;
   document.getElementById('sum').innerHTML =
-    box('Aircraft cable', `<b>${cable.toLocaleString()}</b> ft`, '40 rows × 65&#8242;4&#8243;') +
-    box('Fishing line', `<b>${totalFish.toLocaleString()}</b> ft`, `2,000 drops · avg ${ftin(sumCol/ROWS)}`) +
-    box('Drop range', `${ftin(lens[0])} → ${ftin(lens[ROWS-1])}`, 'downstage → upstage') +
-    box('Rake', `${ang}°`, `${SIDE.up}→${SIDE.down} ft over 52&#8242;0&#8243;`);
-  let h='<thead><tr>'+'<th class="r">Row</th><th class="l">Line length</th>'.repeat(4)+'</tr></thead><tbody>';
-  for(let i=0;i<10;i++){ h+='<tr>'; for(let k=0;k<4;k++){ const r=i+k*10; h+=`<td class="r">${r+1}</td><td class="l">${ftin(lens[r])}</td>`; } h+='</tr>'; }
+    box('Wire rope (installed)', `<b>${Math.round(wire).toLocaleString()}</b> ft`, '32 × 64&#8242;4&#8243; · 2 × 54&#8242;11&#8243; · 4 × 45&#8242;6&#8243;') +
+    box('Fishing line', `<b>${Math.round(totalFish).toLocaleString()}</b> ft`, `${TOTAL.toLocaleString()} drops · avg ${ftin(totalFish/TOTAL)}`) +
+    box('Drop range', `${ftin(lens[0])} → ${ftin(lens[ROWS-1])}`, 'row 1 (upstage) → row 38 (downstage) · exactly 4&#8243; shorter per row') +
+    box('Rake', `${ang}°`, `${ftin(SIDE.up)} → ${ftin(SIDE.down)} over 49&#8242;4&#8243;`);
+  let h='<thead><tr>'+'<th class="r">Row</th><th class="c">LEDs</th><th class="l">Line length</th>'.repeat(4)+'</tr></thead><tbody>';
+  for(let i=0;i<10;i++){ h+='<tr>'; for(let k=0;k<4;k++){ const r=i+k*10;
+    h+= r<ROWS ? `<td class="r">${r+1}</td><td class="c">×${nled[r]}</td><td class="l">${ftin(lens[r])}</td>` : '<td></td><td></td><td></td>'; } h+='</tr>'; }
   document.getElementById('cut').innerHTML=h+'</tbody>';
 }
 
@@ -570,41 +571,28 @@ function computeRigging(){
 (function spec(){
   const sp=document.querySelector('#spec tbody');
   const s=(k,v)=>{const tr=document.createElement('tr');tr.innerHTML=`<td style="color:var(--muted)">${k}</td><td class="n" style="text-align:left">${v}</td>`;sp.appendChild(tr);};
-  s('Grid','50 cols × 40 rows = 2,000');
-  s('Spacing','16&#8243; (1.333 ft) on center');
-  s('Footprint','65&#8242;&#8202;4&#8243; wide × 52&#8242;&#8202;0&#8243; deep');
-  s('Control groups','10 — 2 JESUS · 3 stars · 5 arcs');
-  s('Lettering',`JESUS · 8×14 cells · rows ${J_LO+1}–${J_HI+1} · corners softened`);
+  s('Grid','52 positions × 38 rows · rows 33–38 taper 44 · 40 · 36 · 32 · 28 · 24 · <b>1,868 LEDs</b>');
+  s('Spacing','15&#8243; along the row · 16&#8243; between rows');
+  s('Footprint','63&#8242;&#8202;9&#8243; wide × 49&#8242;&#8202;4&#8243; deep · row 33 is 53&#8242;&#8202;9&#8243; wide, row 38 is 28&#8242;&#8202;9&#8243;');
+  s('Wire rope (installed)','rows 1–32: 64&#8242;&#8202;4&#8243; · rows 33–34: 54&#8242;&#8202;11&#8243; · rows 35–38: 45&#8242;&#8202;6&#8243; · 2,350 ft total');
+  s('Row numbering','row 1 = upstage (over the stage) · row 38 = downstage (over the crowd)');
+  s('Control groups','10 — 2 JESUS · 3 stars (110 · 60 · 60) · 5 arcs (widths 18 · 16 · 26 · 18 · 22%)');
+  s('Lettering',`JESUS · 8×14 cells (8&#8242;&#8202;9&#8243; × 17&#8242;&#8202;4&#8243;) · positions 3–50 · rows ${J_LO+1}–${J_HI+1} · corners softened`);
   s('Ceiling deck','37 ft (fixed)');
-  s('Rake','18 → 31 ft over 52&#8242;0&#8243;');
-  s('Stage','3 ft high (fixed) · 25 ft deep at upstage rows');
+  s('Rake','18&#8242;&#8202;0&#8243; → 30&#8242;&#8202;4&#8243; over 49&#8242;&#8202;4&#8243; (≈14.0°)');
+  s('Fishing line','19&#8242;&#8202;0&#8243; at row 1 · exactly 4&#8243; shorter every row · 6&#8242;&#8202;8&#8243; at row 38 (original 40-row ladder)');
+  s('Stage','3 ft high (fixed) · 25 ft deep at the upstage rows');
+  s('Design lock',`map digest <b>${EXPECTED_DIGEST}</b> · locked 2026-09-17 · no adjustable controls in this document`);
 
   const chips=document.getElementById('chips');
-  ['2,000 fixtures','16&#8243; on center','65&#8242;4&#8243; × 52&#8242;0&#8243;','10 groups']
+  ['1,868 fixtures','15&#8243; × 16&#8243; grid','63&#8242;9&#8243; × 49&#8242;4&#8243;','38 rows · 1 = upstage','10 groups']
     .forEach(c=>{const d=document.createElement('span');d.className='chip';d.innerHTML=c;chips.appendChild(d);});
   ['chipJesus','chipDeck','chipRake'].forEach(id=>{const d=document.createElement('span');d.className='chip';d.id=id;chips.appendChild(d);});
+  document.getElementById('chipDeck').innerHTML='deck <b>37 ft</b>';
+  document.getElementById('chipRake').innerHTML=`rake <b>${ftin(SIDE.up)} → ${ftin(SIDE.down)}</b>`;
 })();
 
-/* ================= interactive init ================= */
-(function initSide(){
-  const syncSide=()=>{
-    document.getElementById('vDown').textContent=SIDE.down+' ft';
-    document.getElementById('vUp').textContent=SIDE.up+' ft';
-    document.getElementById('chipDeck').innerHTML='deck <b>37 ft</b>';
-    document.getElementById('chipRake').innerHTML=`rake <b>${SIDE.up}→${SIDE.down} ft</b>`;
-  };
-  ['down','up'].forEach(id=>{
-    const inp=document.getElementById(id);
-    inp.addEventListener('input',()=>{
-      let v=parseFloat(inp.value);                       // keep the rake: downstage must stay above upstage
-      if(id==='down') v=Math.max(v, SIDE.up+0.5); else v=Math.min(v, SIDE.down-0.5);
-      inp.value=v; SIDE[id]=v; syncSide(); drawSide(); computeRigging();
-    });
-  });
-  syncSide(); drawSide(); computeRigging();
-})();
-
-syncMapping(); rebuild(); requestAnimationFrame(draw);
+build(); drawSide(); computeRigging(); requestAnimationFrame(draw);
 
 /* ================= hero — tiny LEDs hanging in the dark ================= */
 (function hero(){
@@ -642,52 +630,46 @@ syncMapping(); rebuild(); requestAnimationFrame(draw);
   window.addEventListener('resize',()=>{ build(); if(still) paint(0); });
 })();
 
-/* ================= 06 — row-by-row hang guide (live: follows the sliders) ================= */
-// fixed group → controller-zone map (zone stock: Z1/Z2=100, Z3/Z4=400, Z5/Z6=300, Z7/Z8=210, Z9/Z10=150),
-// chosen so the default design fits every zone's stock
-const ZONES={B2:{z:3,cap:400},B4:{z:4,cap:400},B3:{z:5,cap:300},B5:{z:6,cap:300},B1:{z:7,cap:210},JA:{z:8,cap:210},S1:{z:9,cap:150},S2:{z:10,cap:150},S3:{z:1,cap:100},JB:{z:2,cap:100}};
+/* ================= 06 — row-by-row hang guide (static: the design is locked) ================= */
 const GNUM={}; for(const g in ZONES) GNUM[g]=ZONES[g].z;
 const GNAME={B1:'Arc 1',B2:'Arc 2',B3:'Arc 3',B4:'Arc 4',B5:'Arc 5',S1:'Stars 1',S2:'Stars 2',S3:'Stars 3',JA:'JESUS A',JB:'JESUS B'};
 const GCSS={}; for(const g in GNUM){ const [r,gr,b]=hexRGB(MAPCOL[g]);
   GCSS[g]=`background:${MAPCOL[g]};color:${(.299*r+.587*gr+.114*b)>150?'#0b0b0d':'#fff'}`; }
-const GRULER='<div class="gruler">'+[1,10,20,30,40,50].map(p=>`<span style="grid-column:${p}">${p}</span>`).join('')+'</div>';
+const GRULER='<div class="gruler">'+[1,10,20,30,40,50,52].map(p=>`<span style="grid-column:${p}">${p}</span>`).join('')+'</div>';
 function buildGuide(){
   const host=document.getElementById('guide'); if(!host) return;
-  const tot={}; for(const g of group.values()) tot[g]=(tot[g]||0)+1;
   let worst=null; const over=[];
-  for(const g in ZONES){ const n=tot[g]||0, cap=ZONES[g].cap, h=cap/Math.max(n,1)-1;
+  for(const g in ZONES){ const n=counts[g]||0, cap=ZONES[g].cap, sp=cap-n;
     if(n>cap) over.push(`${GNAME[g]} ${n}/${cap}`);
-    if(!worst||h<worst.h) worst={g,n,cap,h}; }
+    if(!worst||sp<worst.sp) worst={g,n,cap,sp}; }
   const stock=over.length?` · OVER ZONE STOCK — ${over.join(', ')}`
-    :` · zone stock OK (tightest: ${GNAME[worst.g]} ${worst.n}/${worst.cap}, ${Math.round(worst.h*100)}% spare)`;
+    :` · zone stock OK (tightest: ${GNAME[worst.g]} ${worst.n}/${worst.cap}, ${worst.sp} spare)`;
   const gset=document.getElementById('gset');
-  gset.textContent=`design stamp — curvature ${P.curve} (${curveWord(P.curve)}) · corners ${cornerWords[P.corner]} · ${P.stars} stars · trim ${SIDE.up}→${SIDE.down} ft · camouflage ${fidelity}%`+stock;
-  gset.style.color=over.length?'var(--warn)':'var(--accent)';
+  gset.textContent=(designOK?'LOCKED DESIGN':'DESIGN CHECK FAILED')+` — 52×38 tapered · 15″×16″ · arcs 18·16·26·18·22% · 230 stars (110·60·60) · corners soft · JESUS rows ${J_LO+1}–${J_HI+1} · lines ${ftin(lineLen(0))}→${ftin(lineLen(ROWS-1))} by 4″ · camouflage ${fidelity}% · digest ${digest}`+stock;
+  gset.style.color=(over.length||!designOK)?'var(--warn)':'var(--accent)';
   document.getElementById('glegend').innerHTML=Object.keys(ZONES).sort((a,b)=>ZONES[a].z-ZONES[b].z).map(g=>{
-    const n=tot[g]||0, cap=ZONES[g].cap;
-    const col=n>cap?'var(--warn)':n*1.1>cap?'var(--gold)':'var(--accent)';
-    return `<span class="g"><span class="num" style="${GCSS[g]}">${ZONES[g].z}</span>Zone ${ZONES[g].z} · ${GNAME[g]}<span class="n" style="color:${col}">${n}/${cap}</span></span>`;}).join('');
+    const n=counts[g]||0, cap=ZONES[g].cap, sp=cap-n;
+    const col=n>cap?'var(--warn)':sp<20?'var(--gold)':'var(--accent)';
+    return `<span class="g"><span class="num" style="${GCSS[g]}">${ZONES[g].z}</span>Zone ${ZONES[g].z} · ${GNAME[g]}<span class="n" style="color:${col}">${n}/${cap} · ${sp} spare</span></span>`;}).join('');
   let html='';
   for(let r=0;r<ROWS;r++){
-    const len=SIDE.deck-(SIDE.up+((ROWS-1-r)/(ROWS-1))*(SIDE.down-SIDE.up));
-    const edge=r===0?'downstage edge — over the crowd':r===ROWS-1?'upstage edge — over the stage':'';
+    const len=SIDE.deck-rowH(r), [s,e]=rowSpan(r);
+    const edge=r===0?'upstage edge — over the stage':r===ROWS-1?'downstage edge — over the crowd':r===32?'taper begins — centered on the wire':'';
     let cells='', runs=[], last=0;
     for(let c=0;c<COLS;c++){
+      if(c<s||c>=e){ cells+='<span class="off"></span>'; continue; }
       const g=group.get(KEY(c,r)), n=GNUM[g];
       cells+=`<span style="${GCSS[g]}">${n}</span>`;
       if(last===n) runs[runs.length-1][1]++; else runs.push([n,1]);
       last=n;
     }
-    html+=`<div class="grow"><div class="ghead"><span class="rn">ROW ${r+1}</span><span class="rl">line ${ftin(len)}</span>${edge?`<span class="redge">${edge}</span>`:''}</div>${GRULER}<div class="gstrip">${cells}</div><div class="runs">${runs.map(([n,k])=>k+'×Z'+n).join(' · ')}</div></div>`;
+    const clr=(WIRE_FT(r)*12-((e-s)-1)*15)/2;   // inches from each end of THIS row's wire to its first/last light
+    const where = `${e-s} LEDs · positions ${s+1}–${e} · first light ${ftin(clr/12)} from each wire end`;
+    html+=`<div class="grow"><div class="ghead"><span class="rn">ROW ${r+1}</span><span class="rl">line ${ftin(len)}</span><span class="rc">${where}</span>${edge?`<span class="redge">${edge}</span>`:''}</div>${GRULER}<div class="gstrip">${cells}</div><div class="runs">${s>0?`start at position ${s+1} · `:''}${runs.map(([n,k])=>k+'×Z'+n).join(' · ')}</div></div>`;
   }
   host.innerHTML=html;
 }
-(function initGuide(){
-  if(!document.getElementById('guide')) return;
-  let t=null; const queue=()=>{ clearTimeout(t); t=setTimeout(buildGuide,120); };   // coalesce drag events
-  ['corner','stars','down','up'].forEach(id=>document.getElementById(id).addEventListener('input',queue));   // 'curve' is a locked readout, not an input
-  buildGuide();
-})();
+buildGuide();
 </script>
 </body>
 </html>
