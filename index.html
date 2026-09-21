@@ -115,20 +115,21 @@
   .glegend .g{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.3);border:1px solid var(--hairline);
        border-radius:10px;padding:7px 11px;font-size:12px;color:var(--muted)}
   .glegend .num,.gstrip span{print-color-adjust:exact;-webkit-print-color-adjust:exact}
-  .glegend .num{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;
-       font-family:var(--mono);font-size:11px;font-weight:700;flex:0 0 auto}
+  .glegend .num{min-width:26px;height:20px;padding:0 4px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+       font-family:var(--mono);font-size:10.5px;font-weight:700;flex:0 0 auto}
   .glegend .n{font-family:var(--mono);color:var(--ink)}
+  .glegend .role{color:var(--faint);font-size:11px}
   .grow{margin:0 0 18px;overflow-x:auto}
   .grow .ghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin:0 0 4px}
   .grow .rn{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ink);letter-spacing:.08em}
   .grow .rl{font-family:var(--mono);font-size:11px;color:var(--accent)}
   .grow .rc{font-family:var(--mono);font-size:11px;color:var(--muted)}
   .grow .redge{font-size:9.5px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase}
-  .gruler,.gstrip{display:grid;grid-template-columns:repeat(52,1fr);gap:1px;min-width:880px}
+  .gruler,.gstrip{display:grid;grid-template-columns:repeat(52,1fr);gap:1px;min-width:900px}
   .gruler{margin:0 0 2px}
   .gruler span{font-family:var(--mono);font-size:8.5px;color:var(--faint);text-align:center}
   .gstrip span{aspect-ratio:1/1;min-width:0;display:flex;align-items:center;justify-content:center;
-       font-family:var(--mono);font-size:9.5px;font-weight:600;border-radius:3px}
+       font-family:var(--mono);font-size:8.5px;font-weight:700;border-radius:3px;letter-spacing:-.02em}
   .gstrip span.off{background:transparent;border:1px dashed rgba(255,255,255,.09)}
   .grow .runs{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin:5px 0 0;line-height:1.9}
 
@@ -145,7 +146,7 @@
   <div class="hero-inner">
     <p class="overline">Zoe Conference 2026</p>
     <h1>Light Grid — Build Views</h1>
-    <p class="sub">Overhead mapping, side section, rigging cut list and the row-by-row hang guide in one place. 1,868 hung LED points on the installed wire rope · 10 control groups · <b style="color:var(--gold);font-weight:600">design locked</b>.</p>
+    <p class="sub">Overhead mapping, side section, rigging cut list and the row-by-row hang guide in one place. 1,782 hung LED points on the installed wire rope · 10 named groups, every one placed in full · <b style="color:var(--gold);font-weight:600">design locked</b>.</p>
     <div class="chips" id="chips"></div>
   </div>
 </header>
@@ -153,14 +154,14 @@
 
   <section class="panel">
     <h2><span class="idx">01</span>Overhead plan &amp; mapping <span class="ctx">viewed from the floor</span></h2>
-    <p class="cap">10 groups: <b>2 for JESUS · 3 star groups · 5 arcs</b>. JESUS splits into two groups along an arc boundary — hide it by matching each half to its arc, reveal it by lighting both a shared color. This is the audience's view — looking up at the underside from the floor — so the word reads correctly here; the controller pixel-map (defined from above) is its left↔right mirror, applied when the map is cut. <b>Row 1 is the upstage row</b> (over the stage, drawn at the bottom); <b>row 38 is downstage</b> (over the crowd, at the top). Rows 33–38 taper to fit the shorter installed wires.</p>
+    <p class="cap">10 groups: <b>2 for JESUS · 3 star groups · 5 arcs</b>. JESUS splits into two groups along an arc boundary — hide it by matching each half to its arc, reveal it by lighting both a shared color. This is the audience's view — looking up at the underside from the floor — so the word reads correctly here; the controller pixel-map (defined from above) is its left↔right mirror, applied when the map is cut. <b>Row 1 is the upstage row</b> (over the stage, drawn at the bottom); <b>row 38 is downstage</b> (over the crowd, at the top). Rows 27–38 round off in a curve so the grid holds exactly the LEDs on hand.</p>
     <div class="lock" id="lock"></div>
     <div class="bar">
-      <div class="fixed"><span class="k">Grid</span><span class="fv">52 × 38 <small>tapered · 1,868</small></span></div>
+      <div class="fixed"><span class="k">Grid</span><span class="fv">52 × 38 <small>curved end · 1,782</small></span></div>
       <div class="fixed"><span class="k">Spacing</span><span class="fv">15″ × 16″ <small>along row · between rows</small></span></div>
-      <div class="fixed"><span class="k">Arc widths</span><span class="fv">18·16·26·18·22 <small>% of span</small></span></div>
-      <div class="fixed"><span class="k">Stars</span><span class="fv">230 <small>110 · 60 · 60</small></span></div>
-      <div class="fixed"><span class="k">JESUS corners</span><span class="fv">soft <small>1 pass</small></span></div>
+      <div class="fixed"><span class="k">Arcs · upstage → downstage</span><span class="fv">Y2 · O2 · Y1 · W2 · G1 <small>Y1 + W2 host the word</small></span></div>
+      <div class="fixed"><span class="k">JESUS</span><span class="fv">G2 + W1 <small>upstage half · downstage half</small></span></div>
+      <div class="fixed"><span class="k">Stars</span><span class="fv">R1 · O1 · R2 <small>72 · 75 · 119</small></span></div>
       <div class="modes" id="modes">
         <button data-m="demo" class="on">▶ Demo</button>
         <button data-m="waves">Waves</button>
@@ -172,8 +173,8 @@
     </div>
     <div class="stage"><canvas id="cv"></canvas></div>
     <div class="counts" id="counts"></div>
-    <p class="note acc"><b>Reading the demo:</b> waves roll upstage→downstage across the 5 arcs, the 3 star groups twinkle out of phase, then JESUS reveals — watch it lift out of the arcs and settle back in. Use <b>JESUS hidden / shown</b> to compare directly, and <b>Group map</b> for the raw assignment. The faint grey line behind each row is that row's installed wire rope, so you can see the taper against the real hardware.</p>
-    <p class="note gold"><b>Why these exact numbers:</b> this design is <b>hard-coded</b> — there are no sliders anywhere in this document, so nobody can nudge it by accident. The arcs are concentric about a point 16 rows behind the upstage edge (the "tight rainbow" look), but their five widths are deliberately <b>not</b> quite equal (18 · 16 · 26 · 18 · 22% of the span) and the three star groups are weighted <b>110 · 60 · 60</b>: neither is visible from the floor, and together they balance the ten controller zones so that <b>every zone keeps at least 36 spare LEDs</b> against its stock. Camouflage is 97% — the word crosses four arcs, but 251 of its 260 fixtures sit in the two it wears. The page recomputes the map from these constants on load and checks it against the locked digest; if anyone edits a constant, the banner above turns red.</p>
+    <p class="note acc"><b>Reading the demo:</b> waves roll upstage→downstage across the 5 arcs, the 3 star groups twinkle out of phase, then JESUS reveals — watch it lift out of the arcs and settle back in. Use <b>JESUS hidden / shown</b> to compare directly, and <b>Group map</b> to see which bin every light comes from (colored by group family: greens, whites, yellows, oranges, reds — the "1" of each color is the strong shade, the "2" is the pale one). The faint grey line behind each row is that row's installed wire rope.</p>
+    <p class="note gold"><b>Why these exact numbers:</b> the ten group counts are the verified stock, so this design places <b>every LED, with nothing left over</b>. That drives everything: the grid holds exactly 1,782 positions (rows 1–26 full, rows 27–38 curving in to 16 wide); the five arcs are cut <b>by rank</b> from the wave center — 21 rows behind the upstage edge — so each arc is exactly its group's count (164 · 229 · 318 · 322 · 216, upstage to downstage); the stars are exactly 72 · 75 · 119; and the word is 267 cells — the full 8×14 letters with 29 corner cells removed, hand-picked so each letter reads cleanly (both S's chamfered at the top-right, the last S chamfered at the top-left so it can't read as a 5), which is what makes it equal Green 2 + White 1. The boundary between the two host arcs is placed inside the word so the upstage half is exactly Green 2's 155 lights; the same boundary splits the arc cells, so the camouflage is <b>100%</b> — no JESUS light sits in an arc of another color. This design is <b>hard-coded</b>: no sliders anywhere. The page recomputes the map from the constants on load and checks it against the locked digest; if anyone edits a constant, the banner above turns red.</p>
   </section>
 
   <section class="panel">
@@ -193,7 +194,7 @@
 
   <section class="panel">
     <h2><span class="idx">03</span>Rigging &amp; fishing-line cut list</h2>
-    <p class="cap">One wire rope per row is already installed level across the width at the deck; each LED drops on its own fishing line. Rows 1–32 carry 52 LEDs; the tapered rows 33–38 carry 44 · 40 · 36 · 32 · 28 · 24.</p>
+    <p class="cap">One wire rope per row is already installed level across the width at the deck; each LED drops on its own fishing line. Rows 1–26 carry 52 LEDs; rows 27–38 carry 50 · 50 · 48 · 46 · 44 · 40 · 36 · 32 · 28 · 22 · 18 · 16.</p>
     <div class="sum" id="sum"></div>
     <table class="cut" id="cut"></table>
     <p class="note"><b>Ordering allowance:</b> add knot/tie-off to every drop (~10–15%). <b>Row&nbsp;1 = upstage</b> (longest line, 19′&#8202;0″); <b>row&nbsp;38 = downstage</b> (shortest, 6′&#8202;8″). Every row is <b>exactly 4″ shorter</b> than the one before — the same ladder as the original 40-row list; its 6′&#8202;0″ and 6′&#8202;4″ lengths are simply no longer used. Each length is used once per LED in that row — the <b>LEDs</b> column is the multiplier.</p>
@@ -222,46 +223,54 @@
 
   <section class="panel">
     <h2><span class="idx">06</span>Row-by-row hang guide <span class="ctx">volunteer build sequence · locked design</span></h2>
-    <p class="cap">One strip per wire rope, <b>Row 1 (upstage, over the stage)</b> through <b>Row 38 (downstage, over the crowd)</b>. Positions run <b>1–52</b> left to right, exactly as drawn in the overhead plan above; on the tapered rows 33–38 the outer positions are left empty (dashed) so the columns stay lined up with the rows above — the header of each strip says where its first light goes. Each numbered square is one LED — the number is the <b>controller zone</b> (= the stock bin) to pull from. The line under each strip reads the same sequence as counts: <b>6×Z2</b> means &ldquo;six lights from Zone&nbsp;2 in a row.&rdquo; Line lengths match the cut list.</p>
+    <p class="cap">One strip per wire rope, <b>Row 1 (upstage, over the stage)</b> through <b>Row 38 (downstage, over the crowd)</b>. Positions run <b>1–52</b> left to right, exactly as drawn in the overhead plan above; on rows 27–38 the outer positions are left empty (dashed) so the columns stay lined up with the rows above — the header of each strip says where its first light goes. Each square is one LED and its label is the <b>group (bin) to pull from</b>: G1/G2 = Green 1/2, W = White, Y = Yellow, O = Orange, R = Red. The line under each strip reads the same sequence as counts: <b>6×W2</b> means &ldquo;six lights from White 2 in a row.&rdquo; Line lengths match the cut list.</p>
     <div class="gset" id="gset"></div>
     <div class="glegend" id="glegend"></div>
-    <p class="note"><b>Zone stock limits:</b> Zones 1–2 hold 100 · Zones 3–4 hold 400 · Zones 5–6 hold 300 · Zones 7–8 hold 210 · Zones 9–10 hold 150. The legend reads <b>count/stock · spare</b> — <span style="color:var(--accent)">teal</span> = 20 or more spare LEDs, <span style="color:var(--gold)">gold</span> = under 20 spare, <span style="color:var(--warn)">red</span> = over stock.</p>
-    <p class="note gold"><b>Orientation check before hanging:</b> this guide (like the overhead plan) is the audience&rsquo;s view from the floor, looking up. If you lay wires out on the deck or work from above, left↔right is mirrored — agree on which physical end of each wire is position&nbsp;1 before attaching the first light. <b>The tapered rows are centered on their shorter wires</b> — measure from the wire's midpoint, not its end. Each strip's header gives the distance from the wire end to its first light (about 3½″ on the full rows; 7″ on row&nbsp;33, 3′&#8202;1″ on row&nbsp;34, 10½″ on row&nbsp;35, then 3′&#8202;4½″ / 5′&#8202;10½″ / 8′&#8202;4½″ on rows 36–38).</p>
+    <p class="note"><b>Group counts are exact:</b> the legend reads <b>placed / on hand</b> for every bin and each one must match — when the last strip is hung, every bin is empty. <span style="color:var(--accent)">Teal</span> = matches, <span style="color:var(--warn)">red</span> = the page's map no longer matches the stock (a constant was edited).</p>
+    <p class="note gold"><b>Orientation check before hanging:</b> this guide (like the overhead plan) is the audience&rsquo;s view from the floor, looking up. If you lay wires out on the deck or work from above, left↔right is mirrored — agree on which physical end of each wire is position&nbsp;1 before attaching the first light. <b>Rows 27–38 are centered on their wires</b> — measure from the wire's midpoint, not its end; each strip's header gives the distance from the wire end to its first light.</p>
     <div id="guide"></div>
   </section>
 
-  <footer>Zoe Conference 2026 · Light Grid · self-contained build reference · design locked 2026-09-17</footer>
+  <footer>Zoe Conference 2026 · Light Grid · self-contained build reference · design locked 2026-09-21</footer>
 </div>
 
 <script>
 /* ================= LOCKED DESIGN CONSTANTS =================
    Row index r runs 0..37 where r = 0 is ROW 1 (upstage, over the stage) and r = 37 is ROW 38
    (downstage, over the crowd). Displayed row = r + 1. Column c runs 0..51; position = c + 1.
-   Changing ANY constant below changes the physical map — the page will flag it (red banner)
-   because the recomputed map no longer matches EXPECTED_DIGEST. Re-lock deliberately or revert. */
+   The ten group counts are the VERIFIED STOCK and every light is placed — the map is built so each
+   group's count comes out exact. Changing ANY constant below changes the physical map — the page
+   flags it (red banner) because the recomputed map no longer matches EXPECTED_DIGEST. */
 const COLS=52, ROWS=38;
 const SX=15/12, SY=16/12;                       // 15" along the row · 16" between rows (feet)
-const TAPER=[44,40,36,32,28,24];                // LEDs on rows 33..38, centered on the wire
+const FULL_ROWS=26;                             // rows 1–26 carry all 52 positions
+const CURVE_W=[50,50,48,46,44,40,36,32,28,22,18,16];   // rows 27..38 — the curved downstage end, centered on the wire
 const WIRE_FT=r=> r<32?64.33 : r<34?54.9 : 45.5; // installed wire rope per row (rows 1–32 / 33–34 / 35–38)
-const rowSpan=r=>{const w=r<32?COLS:TAPER[r-32]; const s=(COLS-w)/2; return [s,s+w];};   // [first, last+1)
+const rowSpan=r=>{const w=r<FULL_ROWS?COLS:CURVE_W[r-FULL_ROWS]; const s=(COLS-w)/2; return [s,s+w];};   // [first, last+1)
+const GROUPS={G1:216,W1:112,Y1:318,O1:75,R1:72,G2:155,W2:322,Y2:164,O2:229,R2:119};   // verified stock — exact
+const GNAME={G1:'Green 1',W1:'White 1',Y1:'Yellow 1',O1:'Orange 1',R1:'Red 1',G2:'Green 2',W2:'White 2',Y2:'Yellow 2',O2:'Orange 2',R2:'Red 2'};
+const BIN_ORDER=['G1','W1','Y1','O1','R1','G2','W2','Y2','O2','R2'];
+const ARCS=['Y2','O2','Y1','W2','G1'], HOST=2;  // arcs upstage→downstage; ARCS[HOST] & ARCS[HOST+1] (Yellow 1, White 2) host the word
+const JIN='G2', JOUT='W1';                      // JESUS: upstage (inner) half · downstage (outer) half
+const STARS=['R1','O1','R2'];                   // filled in this order from the seeded shuffle
 const LETTERS={
   J:[[6,0,2,14],[0,12,6,2],[0,10,2,2]],
   E:[[0,0,2,14],[0,0,8,2],[0,6,6,2],[0,12,8,2]],
   S:[[0,0,8,2],[0,2,2,4],[0,6,8,2],[6,8,2,4],[0,12,8,2]],
   U:[[0,0,2,12],[6,0,2,12],[0,12,8,2]],
 };
-const WORD="JESUS", WORD_X0=2, WORD_Y0=12, LETTER_PITCH=10, CORNER_PASSES=1;   // positions 3–50 · rows 13–26 · glyph tops toward downstage
-const CURVE=16;                                 // arc center = 16 rows (21'4") behind the upstage edge, on the centerline
-const ARC_EDGES=[0.18,0.34,0.60,0.78];          // band boundaries as fractions of the min→max distance span (widths 18·16·26·18·22 %)
-const NBANDS=5;
-const STARS=230, STAR_PATTERN=[...Array(11).fill('S1'),...Array(6).fill('S2'),...Array(6).fill('S3')];   // 11:6:6 → 110 · 60 · 60
-const SHUFFLE_SEED=20260709;
-// group → controller zone (= volunteer bin) with that zone's LED stock. Biggest groups sit in the biggest bins.
-const ZONES={B3:{z:3,cap:400},B5:{z:4,cap:400},B2:{z:5,cap:300},B4:{z:6,cap:300},JA:{z:7,cap:210},
-             B1:{z:8,cap:210},S1:{z:9,cap:150},JB:{z:10,cap:150},S2:{z:1,cap:100},S3:{z:2,cap:100}};
-const EXPECTED={B1:152,B2:263,B3:362,B4:259,B5:342,S1:110,S2:60,S3:60,JA:174,JB:86};
-const EXPECTED_DIGEST='4740ac28';               // FNV-1a of the zone map, exported 2026-09-17 (see generate_light_grid_maps.py)
-const LINE_TOP_FT=19, LINE_STEP_FT=4/12;        // fishing line: 19′0″ at row 1 (upstage), exactly 4″ shorter every row → 6′8″ at row 38 (the original 40-row ladder)
+const WORD="JESUS", LETTER_X=[2,12,21,31,41], WORD_Y0=12;   // letter left edges (0-based cols) → positions 3–49 · rows 13–26 · glyph tops toward downstage · S·U·S sit one column left of a 10-pitch so every visual gap is 2 columns
+const SOFTEN=[                                  // corner cells removed from each letter (glyph x,y · y=0 is the glyph TOP) — hand-picked 2026-09-21:
+  [[6,0],[7,0],[0,10],[1,10],[0,13],[7,13]],                 // J   both S's chamfered top-right, the last S chamfered top-left so it can't read as a "5";
+  [[0,0],[7,0],[7,1],[5,6],[5,7],[7,12],[7,13],[0,13]],      // E   29 cells in all, so the word totals exactly Green 2 + White 1 = 267
+  [[0,0],[7,0],[7,6],[0,7],[0,12],[0,13],[7,13]],            // S
+  [[0,13],[7,13]],                                           // U
+  [[0,0],[7,0],[7,6],[0,7],[0,13],[7,13]],                   // S
+];
+const CURVE=21;                                 // wave/arc center = 21 rows (28 ft) behind the upstage edge, on the centerline
+const SHUFFLE_SEED=20260722;                   // star-scatter seed — chosen so the exact word split lands (see SESSION-HANDOFF)
+const EXPECTED_DIGEST='937cf403';               // FNV-1a of the group map, exported 2026-09-21 (see generate_light_grid_maps.py)
+const LINE_TOP_FT=19, LINE_STEP_FT=4/12;        // fishing line: 19′0″ at row 1 (upstage), exactly 4″ shorter every row → 6′8″ at row 38
 const lineLen=r=>LINE_TOP_FT-r*LINE_STEP_FT;    // feet, by row index
 const SIDE={deck:37, stage:3};                  // all fixed — LED heights follow the line ladder
 SIDE.up=SIDE.deck-lineLen(0); SIDE.down=SIDE.deck-lineLen(ROWS-1);   // 18′0″ at row 1 · 30′4″ at row 38
@@ -269,18 +278,14 @@ const STAGE_DEPTH=25, GAP_FT=27;
 const KEY=(c,r)=>c+","+r;
 
 const ACTIVE=[]; for(let r=0;r<ROWS;r++){const [s,e]=rowSpan(r); for(let c=s;c<e;c++) ACTIVE.push([c,r]);}
-const TOTAL=ACTIVE.length;                      // 1,868
+const TOTAL=ACTIVE.length;                      // 1,782
+const STOCK=Object.values(GROUPS).reduce((a,b)=>a+b,0);
 const WIDTH_FT=(COLS-1)*SX, DEPTH_FT=(ROWS-1)*SY;   // 63'9" × 49'4"
+// role of each group, for the animation
+const ROLEOF={}; ARCS.forEach((g,i)=>ROLEOF[g]={t:'B',i:i+1}); STARS.forEach((g,i)=>ROLEOF[g]={t:'S',i:i+1}); ROLEOF[JIN]={t:'J',h:'A'}; ROLEOF[JOUT]={t:'J',h:'B'};
+const ROLENAME={}; ARCS.forEach((g,i)=>ROLENAME[g]='Arc '+(i+1)); STARS.forEach((g,i)=>ROLENAME[g]='Stars '+(i+1)); ROLENAME[JIN]='JESUS · upstage half'; ROLENAME[JOUT]='JESUS · downstage half';
+const jaBand=HOST+1, jbBand=HOST+2;             // the arcs the two word halves wear when hidden
 
-function jesusCells(){
-  const s=new Set();
-  [...WORD].forEach((ch,k)=>{
-    const lx=WORD_X0+k*LETTER_PITCH;
-    for(const [x,y,w,h] of LETTERS[ch])
-      for(let i=x;i<x+w;i++) for(let j=y;j<y+h;j++) s.add(KEY(lx+i, WORD_Y0+(13-j)));   // flip: glyph top (y=0) toward downstage
-  });
-  return s;
-}
 const NS="http://www.w3.org/2000/svg";
 const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
 function ftin(f){
@@ -300,65 +305,60 @@ function emptyNeighbors(set,c,r){let n=0;for(let dc=-1;dc<=1;dc++)for(let dr=-1;
 let mode='demo';
 let wavePhase=0, prevT=null;
 let group=new Map(), counts={};
-let jesusRemoved=0, jaBand=1, jbBand=2, fidelity=100, bandsCrossed=0, digest='', designOK=false, designMsg='';
+let jesusRemoved=0, wordCells=0, fidelity=100, digest='', designOK=false, designMsg='', splitNote='';
 
 function build(){
-  const jesus=jesusCells();
-  jesusRemoved=0;
-  for(let pass=0; pass<CORNER_PASSES; pass++){                  // simultaneous convex-corner erosion
-    const rem=[];
-    for(const key of jesus){const [c,r]=key.split(',').map(Number); if(emptyNeighbors(jesus,c,r)>=5) rem.push(key);}
-    rem.forEach(k=>jesus.delete(k)); jesusRemoved+=rem.length;
-  }
-  const starCells=[];
-  for(const [c,r] of shuffled){ if(starCells.length>=STARS) break; const k=KEY(c,r); if(!jesus.has(k)) starCells.push(k); }
-  // concentric arcs, measured in FEET so they are true circles on the 15"×16" cells
+  // 1. the word: full 8×14 letters minus the hand-picked SOFTEN cells (the total must equal its two groups exactly)
+  const JCOUNT=GROUPS[JIN]+GROUPS[JOUT];
+  const jesus=new Set(); let fullCount=0;
+  [...WORD].forEach((ch,k)=>{const lx=LETTER_X[k]; const glyph=new Set();
+    for(const [x,y,w,h] of LETTERS[ch]) for(let i=x;i<x+w;i++) for(let j=y;j<y+h;j++) glyph.add(i+','+j);
+    fullCount+=glyph.size;
+    for(const [x,y] of SOFTEN[k]) glyph.delete(x+','+y);
+    for(const g of glyph){const [i,j]=g.split(',').map(Number); jesus.add(KEY(lx+i, WORD_Y0+(13-j)));}});
+  jesusRemoved=fullCount-jesus.size; wordCells=jesus.size;
+  // 2. stars: consecutive blocks of the seeded shuffle, skipping word cells
+  group=new Map();
+  const pool=shuffled.filter(([c,r])=>!jesus.has(KEY(c,r)));
+  let k=0; for(const sg of STARS){ for(let i=0;i<GROUPS[sg];i++){ const [c,r]=pool[k++]; group.set(KEY(c,r),sg); } }
+  // 3. arcs and the word split, by rank from the wave center (distances in feet — true circles on 15"×16" cells)
   const CX=(COLS-1)/2, CY=-CURVE;
   const dist=(c,r)=>{const dx=(c-CX)*SX, dy=(r-CY)*SY; return Math.sqrt(dx*dx+dy*dy);};
-  let dmin=Infinity,dmax=-Infinity;
-  for(const [c,r] of ACTIVE){const d=dist(c,r); if(d<dmin)dmin=d; if(d>dmax)dmax=d;}
-  const bandAt=(c,r)=>{const nd=(dist(c,r)-dmin)/(dmax-dmin); let b=1; for(const e of ARC_EDGES) if(nd>=e) b++; return Math.min(NBANDS,b);};
-  // JESUS → 2 groups split along the arc boundary that camouflages the most fixtures
-  const jl=[...jesus].map(k=>{const [c,r]=k.split(',').map(Number);return {k,band:bandAt(c,r)};});
-  const perBand={}; jl.forEach(f=>perBand[f.band]=(perBand[f.band]||0)+1);
-  const crossed=[...new Set(jl.map(f=>f.band))].sort((a,b)=>a-b);
-  bandsCrossed=crossed.length;
-  if(crossed.length<=1){
-    jaBand=jbBand=crossed[0]||1;
-    const half=Math.ceil(jl.length/2); jl.forEach((f,i)=> f.g=i<half?'JA':'JB'); fidelity=100;
-  } else {
-    let bestScore=-1,bestK=crossed[0],bestJA=crossed[0],bestJB=crossed[crossed.length-1];
-    for(let ci=0;ci<crossed.length-1;ci++){
-      const k=crossed[ci];
-      const low=crossed.filter(b=>b<=k), hi=crossed.filter(b=>b>k);
-      const dl=low.reduce((a,b)=>perBand[b]>perBand[a]?b:a);
-      const dh=hi.reduce((a,b)=>perBand[b]>perBand[a]?b:a);
-      const score=perBand[dl]+perBand[dh];
-      if(score>bestScore){bestScore=score;bestK=k;bestJA=dl;bestJB=dh;}
-    }
-    jaBand=bestJA; jbBand=bestJB;
-    jl.forEach(f=> f.g = f.band<=bestK?'JA':'JB');
-    fidelity=Math.round(100*bestScore/jl.length);
-  }
-  group=new Map();
-  for(const [c,r] of ACTIVE) group.set(KEY(c,r),'B'+bandAt(c,r));
-  starCells.forEach((k,i)=> group.set(k,STAR_PATTERN[i%STAR_PATTERN.length]));
-  jl.forEach(f=> group.set(f.k,f.g));
-  counts={JA:0,JB:0,S1:0,S2:0,S3:0}; for(let b=1;b<=NBANDS;b++)counts['B'+b]=0;
-  for(const g of group.values()) counts[g]++;
-  // lock check: counts + digest must match what the generator/CSV were cut from
-  let s=''; for(const [c,r] of ACTIVE) s+=ZONES[group.get(KEY(c,r))].z+',';
+  const order=ACTIVE.filter(([c,r])=>!group.has(KEY(c,r))).map(([c,r])=>({c,r,d:dist(c,r),j:jesus.has(KEY(c,r))}))
+    .sort((a,b)=>(a.d-b.d)||(a.r-b.r)||(a.c-b.c));
+  let jseen=0, p1=-1, p2=order.length;
+  for(let i=0;i<order.length;i++){ if(order[i].j){ jseen++; if(jseen===GROUPS[JIN]) p1=i; if(jseen===GROUPS[JIN]+1){p2=i;break;} } }
+  const T=ARCS.slice(0,HOST+1).reduce((s,g)=>s+GROUPS[g],0);   // arc cells that must lie inside the word split
+  let a1=0; for(let i=0;i<=p1;i++) if(!order[i].j) a1++;
+  let a2=a1; for(let i=p1+1;i<p2;i++) if(!order[i].j) a2++;
+  const feasible = p1>=0 && a1<=T && T<=a2;
+  let K=p1+1, taken=a1; while(taken<Math.min(T,a2) && K<order.length){ if(!order[K].j) taken++; K++; }
+  const innerArc=order.slice(0,K).filter(o=>!o.j), outerArc=order.slice(K).filter(o=>!o.j);
+  let pos=0; for(const g of ARCS.slice(0,HOST+1)){ innerArc.slice(pos,pos+GROUPS[g]).forEach(o=>group.set(KEY(o.c,o.r),g)); pos+=GROUPS[g]; }
+  pos=0; for(const g of ARCS.slice(HOST+1)){ outerArc.slice(pos,pos+GROUPS[g]).forEach(o=>group.set(KEY(o.c,o.r),g)); pos+=GROUPS[g]; }
+  order.forEach((o,i)=>{ if(o.j) group.set(KEY(o.c,o.r), i<K?JIN:JOUT); });
+  // camouflage: every word cell must sit between the host arcs' outer edges
+  const hin=ARCS[HOST], hout=ARCS[HOST+1];
+  let firstHin=-1, lastHout=-1;
+  order.forEach((o,i)=>{ const g=group.get(KEY(o.c,o.r)); if(g===hin&&firstHin<0) firstHin=i; if(g===hout) lastHout=i; });
+  let bad=0, nj=0; order.forEach((o,i)=>{ if(o.j){ nj++; if(i<firstHin||i>lastHout) bad++; } });
+  fidelity=nj?Math.round(100*(1-bad/nj)):0;
+  splitNote=`split radius ${dist(order[Math.min(K,order.length-1)].c,order[Math.min(K,order.length-1)].r).toFixed(1)} ft`;
+  // 4. counts + lock check
+  counts={}; for(const g of BIN_ORDER) counts[g]=0;
+  for(const g of group.values()) counts[g]=(counts[g]||0)+1;
+  let s=''; for(const [c,r] of ACTIVE) s+=(group.get(KEY(c,r))||'?')+',';
   digest=fnv1a(s);
-  const bad=Object.keys(EXPECTED).filter(g=>counts[g]!==EXPECTED[g]);
-  designOK = digest===EXPECTED_DIGEST && bad.length===0 && TOTAL===1868;
-  designMsg = designOK ? `DESIGN LOCKED · map digest ${digest} · ${TOTAL.toLocaleString()} fixtures · camouflage ${fidelity}% · matches generate_light_grid_maps.py / group_map.csv`
-                       : `DESIGN CHECK FAILED · digest ${digest} ≠ ${EXPECTED_DIGEST}${bad.length?' · counts off: '+bad.map(g=>g+' '+counts[g]+'≠'+EXPECTED[g]).join(', '):''} · a constant was edited — the CSV and this page no longer agree`;
+  const off=BIN_ORDER.filter(g=>counts[g]!==GROUPS[g]);
+  designOK = feasible && digest===EXPECTED_DIGEST && off.length===0 && TOTAL===STOCK && group.size===TOTAL && wordCells===JCOUNT;
+  designMsg = designOK ? `DESIGN LOCKED · map digest ${digest} · ${TOTAL.toLocaleString()} fixtures = the stock, every group placed in full · camouflage ${fidelity}% · matches generate_light_grid_maps.py / group_map.csv`
+    : `DESIGN CHECK FAILED · digest ${digest} ≠ ${EXPECTED_DIGEST}${!feasible?' · the word split cannot be placed (need '+T+' arc cells inside it, geometry allows '+a1+'–'+a2+')':''}${TOTAL!==STOCK?' · grid holds '+TOTAL+' positions but stock is '+STOCK:''}${off.length?' · counts off: '+off.map(g=>g+' '+counts[g]+'≠'+GROUPS[g]).join(', '):''} · a constant was edited — the CSV and this page no longer agree`;
   const lk=document.getElementById('lock'); lk.textContent=designMsg; lk.classList.toggle('bad',!designOK);
   paintCounts();
 }
 
-const MAPCOL={B1:'#1d4ed8',B2:'#06b6d4',B3:'#22c55e',B4:'#f59e0b',B5:'#ef4444',
-              S1:'#f0abfc',S2:'#d946ef',S3:'#a855f7', JA:'#fef3c7',JB:'#e8850c'};
+// bin colors: "1" of each family = strong shade, "2" = pale shade
+const MAPCOL={G1:'#22c55e',G2:'#86efac', W1:'#f5f5f4',W2:'#9ca3af', Y1:'#facc15',Y2:'#fde68a', O1:'#f97316',O2:'#fdba74', R1:'#ef4444',R2:'#fca5a5'};
 function mix(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
 function waveArr(l){l=Math.max(0,Math.min(1,l));const deep=[8,26,58],midc=[28,140,190],crest=[205,246,255];return l<0.5?mix(deep,midc,l*2):mix(midc,crest,(l-0.5)*2);}
 function waveRGB(l){const m=waveArr(l);return `rgb(${m[0]|0},${m[1]|0},${m[2]|0})`;}
@@ -374,7 +374,7 @@ const GLOW={S:glowSprite('255,247,225'),J:glowSprite('255,215,110'),B:glowSprite
 const MAPGLOW={}; for(const k in MAPCOL) MAPGLOW[k]=glowSprite(hexRGB(MAPCOL[k]).join(','));
 
 const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
-const CW=1180, OXL=66, OXR=48;                     // extra left margin for the row numbers
+const CW=1180, OXL=66, OXR=48;
 const sx=(CW-OXL-OXR)/(COLS-1), sy=sx*(SY/SX);     // cells drawn 15:16 like the real grid
 const gw=sx*(COLS-1), gh=sy*(ROWS-1);
 const oy=58, CH=Math.round(oy+gh+64);
@@ -383,11 +383,11 @@ function sizeCanvas(){ cv.width=CW*dpr; cv.height=CH*dpr; cv.style.aspectRatio=C
 sizeCanvas();
 const X=c=>OXL+c*sx, Y=r=>oy+(ROWS-1-r)*sy;        // row 38 (downstage) at top, row 1 (upstage) at bottom
 const R=sx*0.115;
-const wireHalfPx=r=>(WIRE_FT(r)/SX)*sx/2;           // half the installed wire length, in canvas px
+const wireHalfPx=r=>(WIRE_FT(r)/SX)*sx/2;
 
 function smooth(e0,e1,x){x=Math.min(1,Math.max(0,(x-e0)/(e1-e0)));return x*x*(3-2*x);}
 function pulse(t,a,b,f){return smooth(a-f,a,t)*(1-smooth(b,b+f,t));}
-const WSPREAD=0.95;
+const WSPREAD=0.95, NBANDS=5;
 function levels(time,wph){
   const wp=b=>0.5+0.5*Math.sin(wph - b*WSPREAD);
   const tw=j=>0.12+0.88*(0.5+0.5*Math.sin(time*1.7 + j*2.094));
@@ -418,20 +418,20 @@ function draw(ts){
   if(mode==='map'){ drawMap(); requestAnimationFrame(draw); return; }
   const {bl,sl,reveal}=levels(time,wavePhase); const gold=[255,215,110];
   for(const [c,r] of ACTIVE){
-    const g=group.get(KEY(c,r)), x=X(c), y=Y(r);
+    const ro=ROLEOF[group.get(KEY(c,r))], x=X(c), y=Y(r);
     ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle='#0c1728'; ctx.fill();
-    if(g[0]==='B'){ ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle=waveRGB(bl[+g.slice(1)]); ctx.fill(); }
-    else if(g[0]==='S'){ const lv=sl[+g.slice(1)]; if(lv>0.02){ ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle=`rgba(255,247,225,${lv})`; ctx.fill(); } }
-    else { const host=g==='JA'?jaBand:jbBand; const col=mix(waveArr(bl[host]),gold,reveal);
+    if(ro.t==='B'){ ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle=waveRGB(bl[ro.i]); ctx.fill(); }
+    else if(ro.t==='S'){ const lv=sl[ro.i]; if(lv>0.02){ ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle=`rgba(255,247,225,${lv})`; ctx.fill(); } }
+    else { const host=ro.h==='A'?jaBand:jbBand; const col=mix(waveArr(bl[host]),gold,reveal);
       ctx.beginPath(); ctx.arc(x,y,R,0,7); ctx.fillStyle=`rgb(${col[0]|0},${col[1]|0},${col[2]|0})`; ctx.fill(); }
   }
   ctx.globalCompositeOperation='lighter';
   for(const [c,r] of ACTIVE){
-    const g=group.get(KEY(c,r)), x=X(c), y=Y(r); let lvl=0, spr=null;
-    if(g[0]==='S'){lvl=sl[+g.slice(1)];spr=GLOW.S;}
-    else if(g[0]==='J'){ const hb=bl[g==='JA'?jaBand:jbBand];
+    const ro=ROLEOF[group.get(KEY(c,r))], x=X(c), y=Y(r); let lvl=0, spr=null;
+    if(ro.t==='S'){lvl=sl[ro.i];spr=GLOW.S;}
+    else if(ro.t==='J'){ const hb=bl[ro.h==='A'?jaBand:jbBand];
       if(reveal>hb){lvl=reveal;spr=GLOW.J;} else if(hb>0.62){lvl=hb;spr=GLOW.B;} }
-    else { const b=+g.slice(1); if(bl[b]>0.62){lvl=bl[b];spr=GLOW.B;} }
+    else { if(bl[ro.i]>0.62){lvl=bl[ro.i];spr=GLOW.B;} }
     if(spr && lvl>0.5){ const gr=R*11;
       ctx.globalAlpha=Math.min(1,(lvl-0.5)*2.2);
       ctx.drawImage(spr,x-gr,y-gr,gr*2,gr*2); }
@@ -443,15 +443,15 @@ function draw(ts){
 function drawMap(){
   ctx.globalCompositeOperation='lighter';
   for(const [c,r] of ACTIVE){
-    const g=group.get(KEY(c,r)), x=X(c), y=Y(r);
-    const band=g[0]==='B', gr=band?R*4.5:R*6.5;
-    ctx.globalAlpha=band?.5:.85;
+    const g=group.get(KEY(c,r)), ro=ROLEOF[g], x=X(c), y=Y(r);
+    const band=ro.t==='B', gr=band?R*4.5:R*6.5;
+    ctx.globalAlpha=band?.45:.85;
     ctx.drawImage(MAPGLOW[g],x-gr,y-gr,gr*2,gr*2);
   }
   ctx.globalAlpha=1; ctx.globalCompositeOperation='source-over';
-  for(const [c,r] of ACTIVE){ const g=group.get(KEY(c,r)), x=X(c), y=Y(r);
-    ctx.beginPath(); ctx.arc(x,y,g[0]==='B'?R:R*1.2,0,7); ctx.fillStyle=MAPCOL[g]; ctx.fill();
-    if(g[0]==='J'){ ctx.lineWidth=0.8; ctx.strokeStyle='rgba(255,244,200,.85)'; ctx.stroke(); } }
+  for(const [c,r] of ACTIVE){ const g=group.get(KEY(c,r)), ro=ROLEOF[g], x=X(c), y=Y(r);
+    ctx.beginPath(); ctx.arc(x,y,ro.t==='B'?R:R*1.2,0,7); ctx.fillStyle=MAPCOL[g]; ctx.fill();
+    if(ro.t==='J'){ ctx.lineWidth=0.8; ctx.strokeStyle='rgba(255,244,200,.85)'; ctx.stroke(); } }
   clabels();
 }
 function clabels(){
@@ -460,25 +460,23 @@ function clabels(){
   ctx.fillText('DOWNSTAGE — over the crowd · row 38', OXL+gw/2, oy-22);
   ctx.fillText('UPSTAGE — over the stage · row 1', OXL+gw/2, oy+gh+26);
   ctx.fillStyle='rgba(154,147,130,.75)'; ctx.font="11px ui-monospace,Menlo,monospace";
-  ctx.fillText('63′9″ wide · 52 @ 15″ o.c. · rows 33–38 taper 44·40·36·32·28·24 · grey = installed wire', OXL+gw/2, oy+gh+44);
+  ctx.fillText('63′9″ wide · 52 @ 15″ o.c. · rows 27–38 curve '+CURVE_W.join('·')+' · grey = installed wire', OXL+gw/2, oy+gh+44);
   ctx.save(); ctx.translate(OXL-44, oy+gh/2); ctx.rotate(-Math.PI/2);
   ctx.fillText('49′4″ deep · 38 rows @ 16″ o.c.', 0, 0); ctx.restore();
 }
 function paintCounts(){
   const box=document.getElementById('counts');
-  const items=[['JA','JESUS A'],['JB','JESUS B'],['S1','Stars 1'],['S2','Stars 2'],['S3','Stars 3']];
-  for(let b=1;b<=NBANDS;b++) items.push(['B'+b,'Arc '+b]);
-  box.innerHTML=items.map(([g,l])=>`<span class="c"><span class="sw" style="background:${MAPCOL[g]}"></span>${l} <span class="n">${counts[g]}</span></span>`).join('')
-    + `<span class="c" style="color:var(--muted)">JESUS crosses <span class="n">${bandsCrossed}</span> arcs · wears Arc ${jaBand} / Arc ${jbBand} · camouflage <span class="n" style="color:${fidelity>=100?'var(--accent)':'var(--gold)'}">${fidelity}%</span></span>`
-    + `<span class="c" style="color:var(--muted)">corners reassigned <span class="n">${jesusRemoved}</span></span>`;
-  const cj=document.getElementById('chipJesus'); if(cj) cj.innerHTML='JESUS = <b>'+(counts.JA+counts.JB)+'</b>';
+  box.innerHTML=BIN_ORDER.map(g=>`<span class="c"><span class="sw" style="background:${MAPCOL[g]}"></span>${GNAME[g]} <span style="color:var(--faint)">${ROLENAME[g]}</span> <span class="n" style="color:${counts[g]===GROUPS[g]?'var(--ink)':'var(--warn)'}">${counts[g]}/${GROUPS[g]}</span></span>`).join('')
+    + `<span class="c" style="color:var(--muted)">JESUS <span class="n">${wordCells}</span> cells · wears Arc ${jaBand} / Arc ${jbBand} · camouflage <span class="n" style="color:${fidelity>=100?'var(--accent)':'var(--gold)'}">${fidelity}%</span></span>`
+    + `<span class="c" style="color:var(--muted)">letter corner cells softened <span class="n">${jesusRemoved}</span></span>`;
+  const cj=document.getElementById('chipJesus'); if(cj) cj.innerHTML='JESUS = <b>'+wordCells+'</b>';
 }
 document.getElementById('modes').onclick=e=>{const b=e.target.closest('button');if(!b)return;
   mode=b.dataset.m; [...document.querySelectorAll('#modes button')].forEach(x=>x.classList.toggle('on',x===b));};
 window.addEventListener('resize',()=>{dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1));sizeCanvas();});
 
 /* ================= SECTION 2 — side section ================= */
-const J_LO=WORD_Y0, J_HI=WORD_Y0+13;            // JESUS rows (r 15–28 → displayed 16–29)
+const J_LO=WORD_Y0, J_HI=WORD_Y0+13;            // JESUS rows (r 12–25 → displayed 13–26)
 const rowH=r=>SIDE.deck-lineLen(r);              // r=0 upstage (18′0″) → r=37 downstage (30′4″)
 
 function drawSide(){
@@ -553,7 +551,7 @@ function drawSide(){
 /* ================= SECTION 3 — rigging ================= */
 function computeRigging(){
   const lens=[], nled=[]; let totalFish=0, wire=0;
-  for(let r=0;r<ROWS;r++){ const [s,e]=rowSpan(r); lens.push(SIDE.deck-rowH(r)); nled.push(e-s); totalFish+=(e-s)*lens[r]; wire+=WIRE_FT(r); }
+  for(let r=0;r<ROWS;r++){ const [s,e]=rowSpan(r); lens.push(lineLen(r)); nled.push(e-s); totalFish+=(e-s)*lens[r]; wire+=WIRE_FT(r); }
   const ang=(Math.atan2((SIDE.down-SIDE.up),DEPTH_FT)*180/Math.PI).toFixed(1);
   const box=(k,v,s)=>`<div class="b"><span class="k">${k}</span><span class="val">${v}</span><span class="k" style="display:block;margin-top:3px">${s}</span></div>`;
   document.getElementById('sum').innerHTML =
@@ -571,21 +569,23 @@ function computeRigging(){
 (function spec(){
   const sp=document.querySelector('#spec tbody');
   const s=(k,v)=>{const tr=document.createElement('tr');tr.innerHTML=`<td style="color:var(--muted)">${k}</td><td class="n" style="text-align:left">${v}</td>`;sp.appendChild(tr);};
-  s('Grid','52 positions × 38 rows · rows 33–38 taper 44 · 40 · 36 · 32 · 28 · 24 · <b>1,868 LEDs</b>');
+  s('Grid','52 positions × 38 rows · rows 1–26 full · rows 27–38 curve 50 · 50 · 48 · 46 · 44 · 40 · 36 · 32 · 28 · 22 · 18 · 16 · <b>1,782 LEDs = the stock</b>');
   s('Spacing','15&#8243; along the row · 16&#8243; between rows');
-  s('Footprint','63&#8242;&#8202;9&#8243; wide × 49&#8242;&#8202;4&#8243; deep · row 33 is 53&#8242;&#8202;9&#8243; wide, row 38 is 28&#8242;&#8202;9&#8243;');
+  s('Footprint','63&#8242;&#8202;9&#8243; wide × 49&#8242;&#8202;4&#8243; deep · row 27 is 61&#8242;&#8202;3&#8243; wide, row 38 is 18&#8242;&#8202;9&#8243;');
   s('Wire rope (installed)','rows 1–32: 64&#8242;&#8202;4&#8243; · rows 33–34: 54&#8242;&#8202;11&#8243; · rows 35–38: 45&#8242;&#8202;6&#8243; · 2,350 ft total');
   s('Row numbering','row 1 = upstage (over the stage) · row 38 = downstage (over the crowd)');
-  s('Control groups','10 — 2 JESUS · 3 stars (110 · 60 · 60) · 5 arcs (widths 18 · 16 · 26 · 18 · 22%)');
-  s('Lettering',`JESUS · 8×14 cells (8&#8242;&#8202;9&#8243; × 17&#8242;&#8202;4&#8243;) · positions 3–50 · rows ${J_LO+1}–${J_HI+1} · corners softened`);
+  s('Groups (verified stock)','Green 1 216 · White 1 112 · Yellow 1 318 · Orange 1 75 · Red 1 72 · Green 2 155 · White 2 322 · Yellow 2 164 · Orange 2 229 · Red 2 119 — all placed');
+  s('Arcs · upstage → downstage','Yellow 2 (164) · Orange 2 (229) · Yellow 1 (318) · White 2 (322) · Green 1 (216) · center 21 rows behind upstage · cut by rank · Yellow 1 + White 2 host the word');
+  s('JESUS','Green 2 (155, upstage half) + White 1 (112, downstage half) = 267 cells · 8×14 letters (8&#8242;&#8202;9&#8243; × 17&#8242;&#8202;4&#8243;) · positions 3–49 · rows 13–26 · 29 corner cells softened by hand');
+  s('Stars','Red 1 (72) · Orange 1 (75) · Red 2 (119) · seeded scatter');
   s('Ceiling deck','37 ft (fixed)');
   s('Rake','18&#8242;&#8202;0&#8243; → 30&#8242;&#8202;4&#8243; over 49&#8242;&#8202;4&#8243; (≈14.0°)');
   s('Fishing line','19&#8242;&#8202;0&#8243; at row 1 · exactly 4&#8243; shorter every row · 6&#8242;&#8202;8&#8243; at row 38 (original 40-row ladder)');
   s('Stage','3 ft high (fixed) · 25 ft deep at the upstage rows');
-  s('Design lock',`map digest <b>${EXPECTED_DIGEST}</b> · locked 2026-09-17 · no adjustable controls in this document`);
+  s('Design lock',`map digest <b>${EXPECTED_DIGEST}</b> · locked 2026-09-21 · no adjustable controls in this document`);
 
   const chips=document.getElementById('chips');
-  ['1,868 fixtures','15&#8243; × 16&#8243; grid','63&#8242;9&#8243; × 49&#8242;4&#8243;','38 rows · 1 = upstage','10 groups']
+  ['1,782 fixtures · exact','15&#8243; × 16&#8243; grid','63&#8242;9&#8243; × 49&#8242;4&#8243;','38 rows · 1 = upstage','10 groups · all placed']
     .forEach(c=>{const d=document.createElement('span');d.className='chip';d.innerHTML=c;chips.appendChild(d);});
   ['chipJesus','chipDeck','chipRake'].forEach(id=>{const d=document.createElement('span');d.className='chip';d.id=id;chips.appendChild(d);});
   document.getElementById('chipDeck').innerHTML='deck <b>37 ft</b>';
@@ -631,41 +631,33 @@ build(); drawSide(); computeRigging(); requestAnimationFrame(draw);
 })();
 
 /* ================= 06 — row-by-row hang guide (static: the design is locked) ================= */
-const GNUM={}; for(const g in ZONES) GNUM[g]=ZONES[g].z;
-const GNAME={B1:'Arc 1',B2:'Arc 2',B3:'Arc 3',B4:'Arc 4',B5:'Arc 5',S1:'Stars 1',S2:'Stars 2',S3:'Stars 3',JA:'JESUS A',JB:'JESUS B'};
-const GCSS={}; for(const g in GNUM){ const [r,gr,b]=hexRGB(MAPCOL[g]);
+const GCSS={}; for(const g of BIN_ORDER){ const [r,gr,b]=hexRGB(MAPCOL[g]);
   GCSS[g]=`background:${MAPCOL[g]};color:${(.299*r+.587*gr+.114*b)>150?'#0b0b0d':'#fff'}`; }
 const GRULER='<div class="gruler">'+[1,10,20,30,40,50,52].map(p=>`<span style="grid-column:${p}">${p}</span>`).join('')+'</div>';
 function buildGuide(){
   const host=document.getElementById('guide'); if(!host) return;
-  let worst=null; const over=[];
-  for(const g in ZONES){ const n=counts[g]||0, cap=ZONES[g].cap, sp=cap-n;
-    if(n>cap) over.push(`${GNAME[g]} ${n}/${cap}`);
-    if(!worst||sp<worst.sp) worst={g,n,cap,sp}; }
-  const stock=over.length?` · OVER ZONE STOCK — ${over.join(', ')}`
-    :` · zone stock OK (tightest: ${GNAME[worst.g]} ${worst.n}/${worst.cap}, ${worst.sp} spare)`;
+  const off=BIN_ORDER.filter(g=>counts[g]!==GROUPS[g]);
   const gset=document.getElementById('gset');
-  gset.textContent=(designOK?'LOCKED DESIGN':'DESIGN CHECK FAILED')+` — 52×38 tapered · 15″×16″ · arcs 18·16·26·18·22% · 230 stars (110·60·60) · corners soft · JESUS rows ${J_LO+1}–${J_HI+1} · lines ${ftin(lineLen(0))}→${ftin(lineLen(ROWS-1))} by 4″ · camouflage ${fidelity}% · digest ${digest}`+stock;
-  gset.style.color=(over.length||!designOK)?'var(--warn)':'var(--accent)';
-  document.getElementById('glegend').innerHTML=Object.keys(ZONES).sort((a,b)=>ZONES[a].z-ZONES[b].z).map(g=>{
-    const n=counts[g]||0, cap=ZONES[g].cap, sp=cap-n;
-    const col=n>cap?'var(--warn)':sp<20?'var(--gold)':'var(--accent)';
-    return `<span class="g"><span class="num" style="${GCSS[g]}">${ZONES[g].z}</span>Zone ${ZONES[g].z} · ${GNAME[g]}<span class="n" style="color:${col}">${n}/${cap} · ${sp} spare</span></span>`;}).join('');
+  gset.textContent=(designOK?'LOCKED DESIGN':'DESIGN CHECK FAILED')+` — 52×38 curved end · 15″×16″ · arcs Y2·O2·Y1·W2·G1 (center ${CURVE} rows behind upstage) · JESUS G2+W1 rows ${J_LO+1}–${J_HI+1} · stars R1·O1·R2 · lines ${ftin(lineLen(0))}→${ftin(lineLen(ROWS-1))} by 4″ · camouflage ${fidelity}% · digest ${digest}`+(off.length?` · COUNTS OFF — ${off.map(g=>GNAME[g]+' '+counts[g]+'/'+GROUPS[g]).join(', ')}`:' · every group placed in full (0 left over)');
+  gset.style.color=(off.length||!designOK)?'var(--warn)':'var(--accent)';
+  document.getElementById('glegend').innerHTML=BIN_ORDER.map(g=>{
+    const n=counts[g]||0, ok=n===GROUPS[g];
+    return `<span class="g"><span class="num" style="${GCSS[g]}">${g}</span>${GNAME[g]} <span class="role">${ROLENAME[g]}</span><span class="n" style="color:${ok?'var(--accent)':'var(--warn)'}">${n} / ${GROUPS[g]}${ok?' ✓':''}</span></span>`;}).join('');
   let html='';
   for(let r=0;r<ROWS;r++){
-    const len=SIDE.deck-rowH(r), [s,e]=rowSpan(r);
-    const edge=r===0?'upstage edge — over the stage':r===ROWS-1?'downstage edge — over the crowd':r===32?'taper begins — centered on the wire':'';
-    let cells='', runs=[], last=0;
+    const len=lineLen(r), [s,e]=rowSpan(r);
+    const clr=(WIRE_FT(r)*12-((e-s)-1)*15)/2;   // inches from each end of THIS row's wire to its first/last light
+    const edge=r===0?'upstage edge — over the stage':r===ROWS-1?'downstage edge — over the crowd':r===FULL_ROWS?'curve begins — centered on the wire':'';
+    let cells='', runs=[], last='';
     for(let c=0;c<COLS;c++){
       if(c<s||c>=e){ cells+='<span class="off"></span>'; continue; }
-      const g=group.get(KEY(c,r)), n=GNUM[g];
-      cells+=`<span style="${GCSS[g]}">${n}</span>`;
-      if(last===n) runs[runs.length-1][1]++; else runs.push([n,1]);
-      last=n;
+      const g=group.get(KEY(c,r));
+      cells+=`<span style="${GCSS[g]}">${g}</span>`;
+      if(last===g) runs[runs.length-1][1]++; else runs.push([g,1]);
+      last=g;
     }
-    const clr=(WIRE_FT(r)*12-((e-s)-1)*15)/2;   // inches from each end of THIS row's wire to its first/last light
     const where = `${e-s} LEDs · positions ${s+1}–${e} · first light ${ftin(clr/12)} from each wire end`;
-    html+=`<div class="grow"><div class="ghead"><span class="rn">ROW ${r+1}</span><span class="rl">line ${ftin(len)}</span><span class="rc">${where}</span>${edge?`<span class="redge">${edge}</span>`:''}</div>${GRULER}<div class="gstrip">${cells}</div><div class="runs">${s>0?`start at position ${s+1} · `:''}${runs.map(([n,k])=>k+'×Z'+n).join(' · ')}</div></div>`;
+    html+=`<div class="grow"><div class="ghead"><span class="rn">ROW ${r+1}</span><span class="rl">line ${ftin(len)}</span><span class="rc">${where}</span>${edge?`<span class="redge">${edge}</span>`:''}</div>${GRULER}<div class="gstrip">${cells}</div><div class="runs">${s>0?`start at position ${s+1} · `:''}${runs.map(([g,k])=>k+'×'+g).join(' · ')}</div></div>`;
   }
   host.innerHTML=html;
 }
